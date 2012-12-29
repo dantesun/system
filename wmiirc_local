@@ -1,0 +1,29 @@
+#!/bin/sh -f
+export WMII_FONT='xft:YaHei Consolas Hybrid:size=8'
+export WMII_TERM="urxvt"
+
+#status() {
+#  echo -n $(date +"%a %b %d %H:%M:%S")
+#}
+
+local_events() {
+  cat <<'!'
+Key $MODKEY-Tab
+	wmiir xwrite /tag/sel/ctl select down
+Key $MODKEY-q
+  xscreensaver-command -lock
+Key $MODKEY-w
+	wmiir xwrite /ctl view "web"
+!
+}
+
+wmiir write /tagrules <<!
+/Pidgin.*/ -> ~+0
+/Wine.*/ -> ~+0
+/VirtualBox.*/ -> 9
+/Firefox.*/ -> web
+!
+export WMII_URGENTCOLORS='#CCCCCC #660011 #EEEEEE'
+xscreensaver -nosplash &
+ibus-daemon -d -x &
+

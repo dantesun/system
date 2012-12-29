@@ -1,0 +1,123 @@
+## urxvt config
+URxvt.termName: rxvt-unicode
+
+## borderless and no scrollbar
+URxvt.scrollBar_right: true
+!URxvt.scrollBar: false
+URxvt.borderLess: false
+
+## teh transparency stuff
+URxvt.inheritPixmap: true
+URxvt.tintColor: white
+URxvt.shading: 40
+
+URxvt.scrollstyle: plain
+URxvt.font: xft:Monaco:pixelsize=12
+URxvt.boldfont: xft:Monaco:pixelsize=12
+!URxvt.font: xft:YaHei Consolas Hybrid:pixelsize=15:antialias=true
+!URxvt.boldfont:xft:YaHei Consolas Hybrid:pixelsize=15:antialias=true
+!URxvt.font: xft:WenQuanYi Bitmap Song:size=12:antialias=true
+!URxvt.boldFont: xft:WenQuanYi Bitmap Song:size=12:antialias=true
+!URxvt.font:xft:文泉驿等宽正黑:size=11:style=Regular:antialias=true
+
+!URxvt.boldfont:xft:文泉驿等宽正黑:size=11:style=Bold:antialias=true
+
+
+
+! Xft Font Settings
+!URxvt.depth: 32
+Xft.dpi: 96
+!Xft.rgba: rgb
+Xft.hinting: true
+URxvt.saveLines: 50000
+
+! Input Method
+URxvt.preeditType: Root
+URxvt.inputMethod: ibus
+
+! Extensions
+URxvt.perl-lib:           /usr/lib/urxvt/perl
+URxvt.perl-ext-common:  default,url-select,clipboard
+URxvt.keysym.M-u:       perl:url-select:select_next
+URxvt.keysym.M-c:       perl:clipboard:copy
+URxvt.keysym.M-v:       perl:clipboard:paste
+URxvt.keysym.M-C-v:     perl:clipboard:paste_escaped
+URxvt.urlLauncher:      firefox
+URxvt.underlineURLs:    true
+
+
+! 32-bit true transparent, If you want black background,
+! change this to #000000
+URxvt.depth:                32
+Xft.dpi: 96
+Xft.rgba: rgb
+Xft.hinting: true
+Xft.hintstyle: hintslight
+!URxvt.cursorColor:              green
+!URxvt.background:       rgba:0000/0000/0000/dddd
+!URxvt.foreground:               #cccccc
+!URxvt.color0:                   #000000
+!URxvt.color1:                   #aa0000
+!URxvt.color2:                   #00aa00
+!URxvt.color3:                   #aaaa00
+!URxvt.color4:                   #0000aa
+!URxvt.color5:                   #aa00aa
+!URxvt.color6:                   #00aaaa
+!URxvt.color7:                   #aaaaaa
+!URxvt.color8:                   #555555
+!URxvt.color9:                   #ff5555
+!URxvt.color10:                  #55ff55
+!URxvt.color11:                  #ffff55
+!URxvt.color12:                  #5555ff
+!URxvt.color13:                  #ff55ff
+!URxvt.color14:                  #55ffff
+!URxvt.color15:                  #ffffff
+! Cursor
+URxvt.cursorBlink: true
+URxvt.cursorColor: #657b83
+URxvt.cursorUnderline: false
+
+! Pointer
+URxvt.pointerBlank: true
+
+!!Source http://github.com/altercation/solarized
+
+*background: #002b36
+*foreground: #657b83
+!!*fading: 40
+*fadeColor: #002b36
+*cursorColor: #93a1a1
+*pointerColorBackground: #586e75
+*pointerColorForeground: #93a1a1
+
+!! black dark/light
+*color0: #073642
+*color8: #002b36
+
+!! red dark/light
+*color1: #dc322f
+*color9: #cb4b16
+
+!! green dark/light
+*color2: #859900
+*color10: #586e75
+
+!! yellow dark/light
+*color3: #b58900
+*color11: #657b83
+
+!! blue dark/light
+*color4: #268bd2
+*color12: #839496
+
+!! magenta dark/light
+*color5: #d33682
+*color13: #6c71c4
+
+!! cyan dark/light
+*color6: #2aa198
+*color14: #93a1a1
+
+!! white dark/light
+*color7: #eee8d5
+*color15: #fdf6e3

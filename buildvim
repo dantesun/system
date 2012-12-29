@@ -1,0 +1,22 @@
+#!/bin/sh
+__hgroot='http://vim.googlecode.com/hg/'
+__hgrepo='vim'
+__hgbranch='default'
+__hgrev=ca39f14c1ec3
+
+hg clone -b ${__hgbranch} -u ${__hgrev} "${__hgroot}${__hgrepo}" ${__hgrepo}
+echo hg clone -b ${__hgbranch} -u ${__hgrev} "${__hgroot}${__hgrepo}" ${__hgrepo}
+
+if (( $(hg id -n) < $(hg id -nr ${__hgbranch}) )); then
+  printf 'You are not building the latest revision!\n'
+  printf "Consider updating __hgrev to $(hg id -r ${__hgbranch}).\n"
+fi
+
+cd $__hgrepo
+
+./configure --prefix=$HOME/tools/ \
+  --with-features=big --with-compiledby='Dante Sun'\
+  --enable-gpm --enable-acl --with-x=yes \
+  --enable-gui=gtk2 --enable-multibyte --enable-cscope \
+  --enable-netbeans --enable-perlinterp --enable-pythoninterp \
+  --disable-python3interp --enable-rubyinterp --enable-luainterp
