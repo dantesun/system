@@ -373,10 +373,6 @@ map <leader>pp :setlocal paste!<cr>
 "  Customize file type and related
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " supertab
-let g:SuperTabRetainCompletionType=2
-" 0 - 不记录上次的补全方式
-" 1 - 记住上次的补全方式,直到用其他的补全命令改变它
-" 2 - 记住上次的补全方式,直到按ESC退出插入模式为止
 
 " Ruby syntax(ruby.vim)
 let ruby_operators = 1
