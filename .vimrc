@@ -373,6 +373,7 @@ map <leader>pp :setlocal paste!<cr>
 "  Customize file type and related
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " supertab
+let g:SuperTabDefaultCompletionType = "context"
 
 " Ruby syntax(ruby.vim)
 let ruby_operators = 1
@@ -536,9 +537,9 @@ command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 " => CtrlP
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_root_markers = ['.bmtoplevelmarker'] 
-nnoremap <C-\><C-\> :CtrlPBufTagAll<CR>
 nnoremap <leader>r :CtrlPMRUFiles<CR>
-nnoremap <leader>t :CtrlPBufTag<CR>
+nnoremap <leader>t :CtrlPTag<CR>
+nnoremap <leader>b :CtrlPBufTagAll<CR>
 let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_max_height = 30 
 let g:ctrlp_working_path_mode = 'rw'
