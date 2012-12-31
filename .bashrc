@@ -20,6 +20,7 @@ export P4EDITOR=vim
 export P4CONFIG=.p4config
 export EDITOR=vim
 export DEV_SITE=china
+export MANPATH=$MANPATH:$HOME/tools/shared/man
 
 # User specific aliases and functions
 alias vi='vim'

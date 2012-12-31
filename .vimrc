@@ -5,16 +5,8 @@ call pathogen#infect()
 set nocompatible	" Use Vim defaults (much better!)
 filetype plugin indent on
 
-let g:ConqueTerm_Color = 2
-let g:ConqueTerm_TERM = 'xterm-color'
 
 set mouse-=a " Disable mouse
-" fix meta-keys which generate <Esc>a .. <Esc>z
-let c='a'
-while c <= 'z'
-  exec "set <M-".toupper(c).">=^[".c
-  let c = nr2char(1+char2nr(c))
-endw
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = ","
@@ -29,9 +21,7 @@ if has("multi_byte")
   endif
   set encoding=utf-8
   setglobal fileencoding=utf-8
-  "setglobal bomb
   set fileencodings=ucs-bom,utf-8,gb2312,gbk,gb18030
-"  set fileencodings=ucs-bom,utf-8,latin1
 endif
 set diffopt=filler,vertical,iwhite,context:4
 
@@ -109,7 +99,7 @@ set tm=500
 syntax enable "Enable syntax hl
 set encoding=utf-8
 set fileencodings=utf-8,chinese,latin1
-set guifont=YaHei\ Consolas\ Hybrid\ 12
+set guifont=YaHei\ Consolas\ Hybrid\ 10
 set t_Co=256
 set background=dark
 "colors herald
@@ -147,8 +137,6 @@ set wrap "Wrap lines
 "  In visual mode when you press * or # to search for the current selection
 vnoremap <silent> * :call VisualSearch('f')<CR>
 vnoremap <silent> # :call VisualSearch('b')<CR>
-map a ggVG
-
 vnoremap <C-h> ""y:%s/<C-R>=escape(@", '~./\')<CR>//gc<Left><Left><Left>
 
 " When you press gv you vimgrep after the selected text
@@ -264,7 +252,8 @@ iab xdate <c-r>=strftime("[%y-%m-%d %H:%M:%S]")<cr>
 vmap j :m'>+<cr>`<my`>mzgv`yo`z
 vmap k :m'<-2<cr>`>my`<mzgv`yo`z
 "Alt key
-inoremap  i <ESC>
+"inoremap  i <ESC>
+
 
 "Delete trailing white space, useful for Python ;)
 func! DeleteTrailingWS()
@@ -283,8 +272,8 @@ nnoremap <silent> <S-F9> :shell<CR>
 nnoremap <silent> <F3> :set hlsearch!<CR>
 
 "The following will make tabs and trailing spaces visible when requested
-"set listchars=tab:>-,eol:$
-"nmap <silent> <leader>s :set nolist!<CR>
+set listchars=tab:>-,eol:$
+nmap <silent> <leader>v :set nolist!<CR>
 
 " Highlight all instances of word under cursor, when idle.
 " Useful when studying strange source code.
@@ -352,9 +341,9 @@ au BufNewFile,BufRead *.less set filetype=less
 """"""""""""""""""""""""""""""
 " => Command-T
 """"""""""""""""""""""""""""""
-let g:CommandTMaxHeight = 15
+"let g:CommandTMaxHeight = 15
 set wildignore+=*.o,*.obj,.git,*.pyc
-noremap <leader>j :CommandT<cr>
+"noremap <leader>j :CommandT<cr>
 "noremap <leader>y :CommandTFlush<cr>
 
 
@@ -434,29 +423,6 @@ let g:surround_61 = "<%= \r %>" " yss=
 nnoremap <leader>l :TagbarToggle<CR>
 let g:tagbar_autoshowtag = 1
 
-""""""""""""""""""""""""""
-" Key Mapping and commands
-""""""""""""""""""""""""""
-
-"function VisualSelection()
-"  try
-"    let a_save = @a
-"    normal! gv"ay
-"    return @a
-"  finally
-"    let @a = a_save
-"  endtry
-"endfunction
-"vnoremap <silent> * <c-\><c-n>/<c-r>=escape(VisualSelection(), '/\^$*.[~')<cr><cr>
-"vnoremap <silent> # <c-\><c-n>?<c-r>=escape(VisualSelection(), '?\^$*.[~')<cr><cr>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => xml.vim plugin
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:xml_syntax_folding = 1
-"set fdm=syntax
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => ctags http://vim.wikia.com/wiki/C%2B%2B_code_completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -515,22 +481,6 @@ nnoremap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 "let GtagsCscope_Absolute_Path = 1
 "set cscopetag
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => RFC
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" 'RFC number' open the requested RFC number in a new window
-function! <SID>RFC(number)
-"if a:number =~ '^[0-9]+$'
-silent exe ":e http://www.ietf.org/rfc/rfc" . a:number . ".txt"
-"else
-"fechoerr "Specified argument is not a number, only numbers are allowed!"
-"endif
-endfunction
-
-" 'RFC number' open the requested RFC number in a new window
-command! -nargs=1 RFC call <SID>RFC(<q-args>)
-
 command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -549,3 +499,9 @@ let g:ctrlp_custom_ignore = {
       \ 'dir':  '\v[\/]bin[\/]fusion-rhel-x86_64-gnu$',
       \ 'file': '\v\.(d|so|dll)$',
       \ }
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => ConqueTerm
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ConqueTerm_Color = 2
+let g:ConqueTerm_TERM = 'xterm-color'
