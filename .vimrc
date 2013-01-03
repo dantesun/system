@@ -498,10 +498,10 @@ command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 set wildignore+=*.o,*.obj,.git,*.pyc,*.class
 let g:ctrlp_root_markers = ['.bmtoplevelmarker'] 
 nnoremap <leader>r :CtrlPMRUFiles<CR>
-nnoremap <leader>t :CtrlPTag<CR>
-nnoremap <leader>b :CtrlPBufTagAll<CR>
+nnoremap <leader>t :CtrlPBufTag<CR>
+nnoremap <leader>T :CtrlPBufTagAll<CR>
 let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_max_height = 30 
+let g:ctrlp_max_height = 50
 let g:ctrlp_working_path_mode = 'rw'
 let g:ctrlp_by_filename = 1
 "Ignore the fusion project directory **/bin/fusion-rhel-x86_64-gnu/
