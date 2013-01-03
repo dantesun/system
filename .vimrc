@@ -221,7 +221,12 @@ command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
 set laststatus=2
 
 "Format the statusline
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c\ %{CurrentTag()}
+
+function! CurrentTag() 
+  let current_tag = tagbar#currenttag('[%s] ','')
+  return current_tag
+endfunction
 
 function! CurDir()
     let curdir = substitute(getcwd(), '/home/dsun/', "~/", "g")
@@ -278,25 +283,25 @@ nmap <silent> <leader>v :set nolist!<CR>
 " Highlight all instances of word under cursor, when idle.
 " Useful when studying strange source code.
 " Type z/ to toggle highlighting on/off.
-"nnoremap z/ :call AutoHighlightToggle()<CR>
-"function! AutoHighlightToggle()
-"  let @/ = ''
-"  if exists('#auto_highlight')
-"    au! auto_highlight
-"    augroup! auto_highlight
-"    setl updatetime=4000
-"    echo 'Highlight current word: off'
-"    return 0
-"  else
-"    augroup auto_highlight
-"      au!
-"      au CursorHold * let @/ = '\<'.expand('<cword>').'\>'
-"    augroup end
-"    setl updatetime=500
-"    echo 'Highlight current word: ON'
-"    return 1
-"  endif
-"endfunction
+nnoremap z/ :call AutoHighlightToggle()<CR>
+function! AutoHighlightToggle()
+  let @/ = ''
+  if exists('#auto_highlight')
+    au! auto_highlight
+    augroup! auto_highlight
+    setl updatetime=4000
+    echo 'Highlight current word: off'
+    return 0
+  else
+    augroup auto_highlight
+      au!
+      au CursorHold * let @/ = '\<'.expand('<cword>').'\>'
+    augroup end
+    setl updatetime=500
+    echo 'Highlight current word: ON'
+    return 1
+  endif
+endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Cope
@@ -423,6 +428,7 @@ let g:surround_61 = "<%= \r %>" " yss=
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <leader>l :TagbarToggle<CR>
 let g:tagbar_autoshowtag = 1
+let g:tagbar_compact = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => ctags http://vim.wikia.com/wiki/C%2B%2B_code_completion
