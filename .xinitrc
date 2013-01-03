@@ -19,11 +19,20 @@ export LC_CTYPE="zh_CN.UTF-8"
 #exec openbox-lxde
 #urxvt-tabbed &
 #exec scrotwm
-#exec awesome
-exec wmii 
-#export AWT_TOOLKIT=XToolkit
+xscreensaver -nosplash &
+#ibus-daemon -d -x &
+pidgin &
+wmname LG3D
+#setup XIM environment
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS="@im=fcitx"
+fcitx -r
+#xcompmgr -s
+#unagi &
+exec awesome
+#exec wmii 
 # Set background color
-xsetroot -solid "#333333"
+#xsetroot -solid "#333333"
 #exec /usr/bin/i3 -V -d all >> ~/.i3/logfile
 #exec /usr/bin/i3 
-xscreensaver -nosplash &
