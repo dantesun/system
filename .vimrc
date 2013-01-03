@@ -342,8 +342,9 @@ au BufNewFile,BufRead *.less set filetype=less
 " => Command-T
 """"""""""""""""""""""""""""""
 "let g:CommandTMaxHeight = 15
-set wildignore+=*.o,*.obj,.git,*.pyc
+"let g:CommandTMatchWindowReverse = 1
 "noremap <leader>j :CommandT<cr>
+"noremap <leader>r :CommandTJump<cr>
 "noremap <leader>y :CommandTFlush<cr>
 
 
@@ -426,10 +427,9 @@ let g:tagbar_autoshowtag = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => ctags http://vim.wikia.com/wiki/C%2B%2B_code_completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-au BufNewFile,BufRead,BufEnter *.cpp,*.cc,*.h set omnifunc=omni#cpp#complete#Main
-set tags=tags;
-set tags+=~/.vim/tags/cpp,../include/tags
-map ,tt :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+" Make the vim search tag file from current directory all the way up to root dir
+set tags=tags
+set tags+=~/system/stl.tags
 let OmniCpp_NamespaceSearch = 1
 let OmniCpp_GlobalScopeSearch = 1
 let OmniCpp_ShowAccess = 1
@@ -440,8 +440,8 @@ let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
 let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 let OmniCpp_LocalSearchDecl = 1
 " automatically open and close the popup menu / preview window
-"au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-"set completeopt=menuone,menu,longest,preview
+au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+set completeopt=menuone,menu,longest,preview
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
 " Cscope  
@@ -459,11 +459,14 @@ set cscopetagorder=1
 " Use quickfix window to show cscope results  
 set cscopequickfix=s-,c-,d-,i-,t-,e-  
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
+" autocscope  
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
 " Disable autocscope mappings and define my own Cscope mappings  
-let g:autocscope_menus=1
+let g:autocscope_menus=0
 nnoremap <C-w>\ :scs find c <C-R>=expand("<cword>")<CR><CR>  
-"nnoremap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>  
-nnoremap <leader>s :cs find s <C-R>=expand("<cword>")<CR><CR>  
+nnoremap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>  
 nnoremap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>  
 nnoremap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>  
 nnoremap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>  
@@ -486,15 +489,16 @@ command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => CtrlP
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set wildignore+=*.o,*.obj,.git,*.pyc,*.class
 let g:ctrlp_root_markers = ['.bmtoplevelmarker'] 
 nnoremap <leader>r :CtrlPMRUFiles<CR>
 nnoremap <leader>t :CtrlPTag<CR>
 nnoremap <leader>b :CtrlPBufTagAll<CR>
-let g:ctrlp_cmd = 'CtrlPMixed'
+let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_max_height = 30 
 let g:ctrlp_working_path_mode = 'rw'
 let g:ctrlp_by_filename = 1
-" Ignore the fusion project directory **/bin/fusion-rhel-x86_64-gnu/
+"Ignore the fusion project directory **/bin/fusion-rhel-x86_64-gnu/
 let g:ctrlp_custom_ignore = {
       \ 'dir':  '\v[\/]bin[\/]fusion-rhel-x86_64-gnu$',
       \ 'file': '\v\.(d|so|dll)$',
