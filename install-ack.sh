@@ -1,2 +1,3 @@
-curl http://betterthangrep.com/ack-standalone > $HOME/tools/ack
-chmod +x $HOME/tools/ack
+cd $HOME/tools/bin
+curl http://betterthangrep.com/ack-standalone > ack
+chmod +x ack
