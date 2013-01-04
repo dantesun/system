@@ -3,7 +3,6 @@
 
 #export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dsun.awt.disablegrab=true' 
 export PATH=$HOME/tools/bin:$HOME/tools/sbin:$PATH
-export MANPATH=$MANPATH:$HOME/tools/man
 if [ "Darwin" = `uname -s` ]; then
   if which brew &> /dev/null; then
     PHP_PATH="$(brew --prefix php54)/bin"
@@ -20,7 +19,8 @@ export P4EDITOR=vim
 export P4CONFIG=.p4config
 export EDITOR=vim
 export DEV_SITE=china
-export MANPATH=$MANPATH:$HOME/tools/shared/man
+unset MANPATH
+export MANPATH=$HOME/tools/share/man:$(manpath)
 
 # User specific aliases and functions
 alias vi='vim'
