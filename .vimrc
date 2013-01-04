@@ -182,12 +182,11 @@ map l <C-W>l
 map <leader>cd :cd %:p:h<CR>
 " Quick swith to the last buffer
 map <leader>a <C-^>
-map <leader>F :NERDTreeFind<CR>
 " Switching line number
 nnoremap <leader>N :setlocal number!<cr>
 
-nnoremap <C-h> :tabprevious<CR>
-nnoremap <C-l> :tabnext<CR>
+"nnoremap <C-h> :tabprevious<CR>
+"nnoremap <C-l> :tabnext<CR>
 " Specify the behavior when switching between buffers 
 set switchbuf=usetab
 set stal=0
@@ -283,25 +282,25 @@ nmap <silent> <leader>v :set nolist!<CR>
 " Highlight all instances of word under cursor, when idle.
 " Useful when studying strange source code.
 " Type z/ to toggle highlighting on/off.
-nnoremap z/ :call AutoHighlightToggle()<CR>
-function! AutoHighlightToggle()
-  let @/ = ''
-  if exists('#auto_highlight')
-    au! auto_highlight
-    augroup! auto_highlight
-    setl updatetime=4000
-    echo 'Highlight current word: off'
-    return 0
-  else
-    augroup auto_highlight
-      au!
-      au CursorHold * let @/ = '\<'.expand('<cword>').'\>'
-    augroup end
-    setl updatetime=500
-    echo 'Highlight current word: ON'
-    return 1
-  endif
-endfunction
+"nnoremap z/ :call AutoHighlightToggle()<CR>
+"function! AutoHighlightToggle()
+"  let @/ = ''
+"  if exists('#auto_highlight')
+"    au! auto_highlight
+"    augroup! auto_highlight
+"    setl updatetime=4000
+"    echo 'Highlight current word: off'
+"    return 0
+"  else
+"    augroup auto_highlight
+"      au!
+"      au CursorHold * let @/ = '\<'.expand('<cword>').'\>'
+"    augroup end
+"    setl updatetime=500
+"    echo 'Highlight current word: ON'
+"    return 1
+"  endif
+"endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Cope
@@ -317,26 +316,6 @@ map <leader>p :cp<cr>
 let g:bufExplorerDefaultHelp=0
 let g:bufExplorerShowRelativePath=1
 map <leader>o :BufExplorer<cr>
-
-""""""""""""""""""""""""""""""
-" => Minibuffer plugin
-""""""""""""""""""""""""""""""
-"let g:miniBufExplorerMoreThanOne = 0
-"let g:miniBufExplSplitBelow=0
-"let g:miniBufExplForceSyntaxEnable = 1
-"let g:miniBufExplMapCTabSwitchBufs = 1
-"let g:bufExplorerSortBy = "name"
-
-"autocmd BufRead,BufNew :call UMiniBufExplorer
-
-"map <leader>u :TMiniBufExplorer<cr>
-"map <leader>m :MiniBufExplorer<cr>
-
-""""""""""""""""""""""""""""""
-" => MRU plugin
-""""""""""""""""""""""""""""""
-"let MRU_Max_Entries = 400
-"map <leader>f :MRU<CR>
 
 """"""""""""""""""""""""""""""
 " => LESS syntax 
@@ -384,6 +363,7 @@ let ruby_space_errors = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <silent> <Leader>P :NERDTreeToggle<CR>
 nmap <silent> <Leader>f :NERDTreeFind<CR>
+nmap <silent> <leader>F :NERDTreeFind<CR>
 let NERDTreeShowBookmarks = 1
 "let NERDTreeWinSize = 40
 "autocmd vimenter * NERDTree
@@ -437,7 +417,7 @@ let g:tagbar_compact = 1
 set tags=tags
 set tags+=~/system/stl.tags
 let OmniCpp_NamespaceSearch = 1
-let OmniCpp_GlobalScopeSearch = 1
+let OmniCpp_GlobalScopeSearch = 0
 let OmniCpp_ShowAccess = 1
 let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
 let OmniCpp_MayCompleteDot = 1 " autocomplete after .
@@ -447,7 +427,8 @@ let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 let OmniCpp_LocalSearchDecl = 1
 " automatically open and close the popup menu / preview window
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-set completeopt=menuone,menu,longest,preview
+"set completeopt=menuone,menu,longest,preview
+set completeopt=menuone,menu,longest
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
 " Cscope  
@@ -497,16 +478,18 @@ command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set wildignore+=*.o,*.obj,.git,*.pyc,*.class
 let g:ctrlp_root_markers = ['.bmtoplevelmarker'] 
+let g:ctrlp_clear_cache_on_exit = 0
 nnoremap <leader>r :CtrlPMRUFiles<CR>
 nnoremap <leader>t :CtrlPBufTag<CR>
 nnoremap <leader>T :CtrlPBufTagAll<CR>
+nnoremap <leader>m :CtrlPBookmarkDir<CR>
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_max_height = 50
-let g:ctrlp_working_path_mode = 'rw'
+"let g:ctrlp_working_path_mode = 'rw'
 let g:ctrlp_by_filename = 1
 "Ignore the fusion project directory **/bin/fusion-rhel-x86_64-gnu/
 let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\v[\/]bin[\/]fusion-rhel-x86_64-gnu$',
+      \ 'dir':  '\v[\/](bin\/fusion-rhel-x86_64-gnu|fusion\/build\/root|fusion\/components\/(fusion\.mgmt|gui)|fusion\/(testing|commons|os)|fusion\/thirdparty\/images)$',
       \ 'file': '\v\.(d|so|dll)$',
       \ }
 
