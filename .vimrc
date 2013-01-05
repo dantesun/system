@@ -369,6 +369,7 @@ let NERDTreeShowBookmarks = 1
 "autocmd vimenter * NERDTree
 autocmd vimenter * if !argc() |  NERDTree | endif
 let NERDTreeChDirMode = 2
+let NERDTreeWinPos="right"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Java Syntax
@@ -409,6 +410,8 @@ let g:surround_61 = "<%= \r %>" " yss=
 nnoremap <leader>l :TagbarToggle<CR>
 let g:tagbar_autoshowtag = 1
 let g:tagbar_compact = 1
+let g:tagbar_left = 1
+let g:tagbar_width = 30
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => ctags http://vim.wikia.com/wiki/C%2B%2B_code_completion
