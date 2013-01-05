@@ -14,7 +14,8 @@ if [ "Darwin" = `uname -s` ]; then
     COREUTIL_PATH="$(brew --prefix coreutils)/libexec/gnubin"
     FINDUTILS_PATH="$(brew --prefix findutils)/bin"
     CTAGS_PATH="$(brew --prefix ctags)/bin"
-    export PATH=$COREUTIL_PATH:$CURL_PATH:$PHP_PATH:$FINDUTILS_PATH:$CTAGS_PATH:$PATH
+    GETTEXT_PATH="$(brew --prefix gettext)/bin"
+    export PATH=$COREUTIL_PATH:$CURL_PATH:$PHP_PATH:$FINDUTILS_PATH:$CTAGS_PATH:$GETTEXT_PATH:$PATH
     alias find=gfind
   fi
 fi
