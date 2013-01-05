@@ -1,6 +1,10 @@
 #!/usr/local/bin/bash
 # .bashrc
 
+# Make Bash append rather than overwrite the history on disk
+shopt -s histappend
+export CDPATH=".:..:../..:~:~/fusion.main/fusion/components/services"
+
 #export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dsun.awt.disablegrab=true' 
 export PATH=$HOME/tools/bin:$HOME/tools/sbin:$PATH
 if [ "Darwin" = `uname -s` ]; then
