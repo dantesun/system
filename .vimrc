@@ -491,10 +491,11 @@ let g:ctrlp_max_height = 50
 "let g:ctrlp_working_path_mode = 'rw'
 let g:ctrlp_by_filename = 1
 "Ignore the fusion project directory **/bin/fusion-rhel-x86_64-gnu/
-let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\v[\/](bin\/fusion-rhel-x86_64-gnu|fusion\/build\/root|fusion\/components\/(fusion\.mgmt|gui)|fusion\/(testing|commons|os)|fusion\/thirdparty\/images)$',
-      \ 'file': '\v\.(d|so|dll)$',
-      \ }
+"let g:ctrlp_custom_ignore = {
+"      \ 'dir':  '\v[\/](bin\/fusion-rhel-x86_64-gnu|fusion\/build\/root|fusion\/components\/(fusion\.mgmt|gui)|fusion\/(testing|commons|os)|fusion\/thirdparty\/images)$',
+"      \ 'file': '\v\.(d|so|dll)$',
+"      \ }
+let g:ctrlp_user_command = 'ack -f --nojava --ignore-dir=os --ignore-dir=testing %s'       " MacOSX/Linux
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => ConqueTerm
