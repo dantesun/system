@@ -223,7 +223,7 @@ set laststatus=2
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c\ %{CurrentTag()}
 
 function! CurrentTag() 
-  let current_tag = tagbar#currenttag('[%s] ','')
+  let current_tag = tagbar#currenttag('[%s] ','', 'f')
   return current_tag
 endfunction
 
