@@ -12,7 +12,7 @@
 
 " ---------------------------------------------------------------------
 try
-	if &cp || (exists('g:loaded_TagHLLibraries') && (g:plugin_development_mode != 1))
+	if &cp || v:version < 700 || (exists('g:loaded_TagHLLibraries') && (g:plugin_development_mode != 1))
 		throw "Already loaded"
 	endif
 catch
@@ -112,7 +112,7 @@ function! TagHighlight#Libraries#FindUserLibraries()
 						\     'Path': fnamemodify(library_path, '%:p'),
 						\ }]
 		else
-			TagHLDebug("Cannot load user library " . library, "Error")
+			call TagHLDebug("Cannot load user library " . library, "Error")
 		endif
 	endfor
 	return libraries_to_load
