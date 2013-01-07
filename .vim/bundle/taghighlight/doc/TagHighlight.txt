@@ -3,7 +3,7 @@
 Author:     A. S. Budden <abuddenNOSPAM@NOSPAMgmail.com>
 			Remove NOSPAM.
 
-Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
+Copyright:  (c) 2009-2012 by A. S. Budden             *TagHighlight-copyright*
             Permission is hereby granted to use and distribute this code,
             with or without modifications, provided that this copyright
             notice is copied with it. Like anything else that's free,
@@ -24,12 +24,18 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 	2.3   Colouring                          |TagHighlight-colours|
 	2.4   Configuration                      |TagHighlight-config|
 	2.4.1 How to Set Options                 |TagHighlight-how-options|
-	2.4.2 Example Configurations             |TagHighlight-example-configs||
+	2.4.2 Example Configurations             |TagHighlight-example-configs|
 	2.4.3 Option Summary                     |TagHighlight-option-list|
 	2.4.4 Option Details                     |TagHighlight-option-details|
-	2.5   Installation                       |TagHighlight-install|
-	2.5.1 Requirements                       |TagHighlight-requirements|
-	2.5.2 Installation Guide                 |TagHighlight-install-guide|
+	2.5   Integration with Other Software    |TagHighlight-integration|
+	2.5.1 Tagbar Integration                 |TagHighlight-tagbar|
+	2.5.2 Git Integration                    |TagHighlight-git|
+	2.5.3 Bazaar Integration                 |TagHighlight-bazaar|
+	2.5.4 Mercurial Integration              |TagHighlight-mercurial|
+	2.5.5 Subversion Integration             |TagHighlight-subversion|
+	2.6   Installation                       |TagHighlight-install|
+	2.6.1 Requirements                       |TagHighlight-requirements|
+	2.6.2 Installation Guide                 |TagHighlight-install-guide|
 
 	3.    Standard Libraries                 |TagHighlight-standard-libraries|
 	3.1   Introduction                       |TagHighlight-stdlib-intro|
@@ -39,9 +45,16 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 	4.1   Adding More Languages              |TagHighlight-adding|
 	4.1.1 Example                            |TagHighlight-add-example|
 
-	5.    Troubleshooting                    |TagHighlight-troubleshooting|
+	5.    Contributing Changes               |TagHighlight-contributions|
+	5.1   Suggestions for Improvements       |TagHighlight-suggestions|
+	5.2   Patches                            |TagHighlight-patches|
+	5.3   Usage Examples                     |TagHighlight-usage-examples|
 
-	6.    TagHighlight History               |TagHighlight-history|
+	6.    Troubleshooting                    |TagHighlight-troubleshooting|
+
+	7.    Credits                            |TagHighlight-credits|
+
+	8.    TagHighlight History               |TagHighlight-history|
 
 ==============================================================================
 2. TagHighlight Manual           *TagHighlight-manual*                      {{{1
@@ -64,17 +77,21 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 	is added (with optional ! for recursive operation) to keep the generated
 	files up to date.
 
+                                         *TagHighlight-languages*
 	At present, the highlighter supports the following languages:
 
 		* C/C++
 		* C#
 		* Java
+		* Javascript
 		* Matlab (function names only; may require custom ctags)
 		* Perl
 		* PHP
 		* Python
 		* Ruby (largely untested)
+		* Scala
 		* Fortran
+		* Go (if your version of ctags supports it)
 		* VHDL (if your version of ctags supports it)
 
 	It should also work correctly with Charles Campbell's rainbow.vim bracket
@@ -102,12 +119,11 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 
 	The plugin is distribute as source code (binaries of the python components
 	are also available for computers that do not have python installed) The
-	source code is managed using the Git version control system and is
-	available on github at:
+	source code is managed using the Mercurial version control system and is
+	available on bitbucket at:
 >
-		https://github.com/abudden/taghighlight
+		https://bitbucket.org/abudden/taghighlight
 <
-
 ------------------------------------------------------------------------------
 
 2.2 Commands                             *TagHighlight-commands*            {{{2
@@ -293,12 +309,18 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 2.4.2 Example Configurations             *TagHighlight-example-configs*     {{{3
 
 	Introduction                                                          {{{4
-		
+
 		This section contains a few examples of configurations that may be
 		useful.  It is hoped that most users will be able to use TagHighlight
 		without setting any options at all, but these give some examples of
-		some more complex scenarios.
-	
+		some more complex scenarios.  These examples are also all on the wiki:
+>
+			https://bitbucket.org/abudden/taghighlight/wiki/Home
+<
+		If you have any additional examples (e.g. how to use with different
+		variants of ctags, specific libraries or other custom configurations),
+		please add them to the wiki.
+
 	Trivial Configuration                                                 {{{4
 
 		Use case: User has source code placed in multiple subdirectories and
@@ -325,7 +347,7 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 				  from Qt4 (e.g. QString) to be highlighted.
 
 		Implementation:
-			
+
 			Make sure that you have installed the standard libraries (see 
 			|TagHighlight-install-stdlib|).  The Qt4 library will be loaded
 			automatically.  Create a file called taghl_config.txt in the
@@ -399,13 +421,13 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 			List of languages to scan when generating highlighter.
 
 		ParsingSkipList                  Link:|TagHL-ParsingSkipList|
-		   List of files for which types highlighter should not be loaded.
+			List of files for which types highlighter should not be loaded.
 
 		Recurse                          Link:|TagHL-Recurse|
-		   When generating tags, recurse into subdirectories.
+			When generating tags, recurse into subdirectories.
 
 		SourceDir                        Link:|TagHL-SourceDir|
-		   Explicit location of the source code that you want to scan.
+			Explicit location of the source code that you want to scan.
 
 	When to read the generated types file
 
@@ -414,7 +436,7 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 
 		ExtensionLanguageOverrides       Link:|TagHL-ExtensionLanguageOverrides|
 			Force a particular file extension to match a chosen language.
-			
+
 		FileTypeLanguageOverrides        Link:|TagHL-FileTypeLanguageOverrides|
 			Force a particular file type to match a chosen language.
 
@@ -424,111 +446,129 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 	What to include in the generated types file
 
 		IncludeLocals                    Link:|TagHL-IncludeLocals|
-		   Include local variables (not context aware) in types highlighter.
+			Include local variables (not context aware) in types highlighter.
 
 		IncludeSynMatches                Link:|TagHL-IncludeSynMatches|
-		   Include syntax matches in highlighter (see warning in details).
+			Include syntax matches in highlighter (see warning in details).
 
 		SkipPatterns                     Link:|TagHL-SkipPatterns|
-		   List of python REs for keywords that should be skipped.
+			List of python REs for keywords that should be skipped.
 
 		SkipVimKeywords                  Link:|TagHL-SkipVimKeywords|
-		   Don't include vim keywords in highlighter.
+			Don't include vim keywords in highlighter.
 
 	Customisation:
 
 		PreReadHooks                     Link:|TagHL-PreReadHooks|
-		   List of functions to call before reading types.
+			List of functions to call before reading types.
 
 		PostReadHooks                    Link:|TagHL-PostReadHooks|
-		   List of functions to call after reading types.
+			List of functions to call after reading types.
 
 		PreUpdateHooks                   Link:|TagHL-PreUpdateHooks|
-		   List of functions to call before updating types.
+			List of functions to call before updating types.
 
 		PostUpdateHooks                  Link:|TagHL-PostUpdateHooks|
-		   List of functions to call after updating types.
+			List of functions to call after updating types.
 
 	Disabling built-in functionality:
 
 		DisableTypeParsing               Link:|TagHL-DisableTypeParsing|
-		   Don't read types highlighter (disable highlight functionality).
+			Don't read types highlighter (disable highlight functionality).
+
+		DisableTagManager                Link: |TagHL-DisableTagManager|
+			Don't automatically adjust the 'tags' option.
 
 		DoNotGenerateTags                Link:|TagHL-DoNotGenerateTags|
-		   Don't generate tags (use an existing tags file).
+			Don't generate tags (use an existing tags file).
+
+		DoNotGenerateTagsIfPresent       Link:|TagHL-DoNotGenerateTagsIfPresent|
+			Don't generate tags if a tags file is detected.
+
+		OnlyGenerateTypesIfPresent      Link:|TagHL-OnlyGenerateTypesIfPresent|
+			Only generate types or tags if a types file already exists.
 
 	How to Run Python and Ctags:
 
 		ForcedPythonVariant              Link:|TagHL-ForcedPythonVariant|
-		   Specify specific python variant to use.
+			Specify specific python variant to use.
 
 		PathToPython                     Link:|TagHL-PathToPython|
-		   Specify path to python executable.
+			Specify path to python executable.
 
 		PythonVariantPriority            Link:|TagHL-PythonVariantPriority|
-		   Specify priority order of different python variants.
+			Specify priority order of different python variants.
 
 		CtagsExecutable                  Link:|TagHL-CtagsExecutable|
-		   Specify the name of (or full path to) exuberant ctags.
+			Specify the name of (or full path to) exuberant ctags.
+
+		CtagsVariant                     Link:|TagHL-CtagsVariant|
+			Use a variant of ctags other than exuberant.
+
+		CtagsArguments                   Link:|TagHL-CtagsArguments|
+			Specify an explicit list of arguments to pass to ctags.
+
+		CtagsExtraArguments              Link:|TagHL-CtagsExtraArguments|
+			Specify a list of extra arguments to pass to ctags.
 
 	Locations of Files (normal):
 
 		DefaultDirModeSearchWildcards    Link:|TagHL-DirModeSearchWildcards|
-		   What to search for when deciding which directory to use.
+			What to search for when deciding which directory to use.
 
 		DefaultDirModePriority           Link:|TagHL-DefaultDirModePriority|
-		   Which directories to search by default.
+			Which directories to search by default.
 
 		MaxDirSearchLevels               Link:|TagHL-MaxDirSearchLevels|
-		   How far up the directory tree to search.
+			How far up the directory tree to search.
 
 	Location and name of Project Configuration File:
 
 		ProjectConfigFileDirModePriority Link:|TagHL-ProjectConfigFileDirModePriority|
-		   Which directories to search for project config file.
+			Which directories to search for project config file.
 
 		ProjectConfigFileDirectory       Link:|TagHL-ProjectConfigFileDirectory|
-		   Explicit location for project config file.
+			Explicit location for project config file.
 
 		ProjectConfigFileName            Link:|TagHL-ProjectConfigFileName|
-		   File name for project config file.
+			File name for project config file.
 
 		ProjectConfigFileSearchWildcards Link:|TagHL-DirModeSearchWildcards|
-		   What to search for when deciding which directory to use.
+			What to search for when deciding which directory to use.
 
 	Location and name of tag file:
 
 		TagFileDirModePriority           Link:|TagHL-TagFileDirModePriority|
-		   Which directories to search for tag file.
+			Which directories to search for tag file.
 
 		TagFileDirectory                 Link:|TagHL-TagFileDirectory|
-		   Explicit location for tag file.
+			Explicit location for tag file.
 
 		TagFileName                      Link:|TagHL-TagFileName|
-		   File name for tag file.
+			File name for tag file.
 
 		TagFileSearchWildcards           Link:|TagHL-DirModeSearchWildcards|
-		   What to search for when deciding which directory to use.
+			What to search for when deciding which directory to use.
 
 	Location and name of types file:
 
 		TypesFileDirModePriority         Link:|TagHL-TypesFileDirModePriority|
-		   Which directories to search for types highlighter file.
+			Which directories to search for types highlighter file.
 
 		TypesFileDirectory               Link:|TagHL-TypesFileDirectory|
-		   Explicit location for types highlighter file.
+			Explicit location for types highlighter file.
 
 		TypesFileExtension               Link:|TagHL-TypesFileExtension|
-		   File extension for types highlighter file.
+			File extension for types highlighter file.
 
 		TypesFileNameForce               Link:|TagHL-TypesFileNameForce|
-		   Force an explicit file name for the types highlighter file.
+			Force an explicit file name for the types highlighter file.
 
 		TypesFilePrefix                  Link:|TagHL-TypesFilePrefix|
-		   Prefix for the types highlighter file.
+			Prefix for the types highlighter file.
 
 		TypesFileSearchWildcards         Link:|TagHL-DirModeSearchWildcards|
-		   What to search for when deciding which directory to use.
+			What to search for when deciding which directory to use.
 
 	Libraries:
 
@@ -536,13 +576,13 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 			Don't try loading standard libraries.
 
 		ForcedStandardLibraries          Link:|TagHL-ForcedStandardLibraries|
-		   Always load specified standard libraries.
+			Always load specified standard libraries.
 
 		UserLibraries                    Link:|TagHL-UserLibraries|
-		   List of user libraries that should be loaded.
+			List of user libraries that should be loaded.
 
 		UserLibraryDir                   Link:|TagHL-UserLibraryDir|
-		   Location of user libraries specified with relative path.
+			Location of user libraries specified with relative path.
 
 	Debugging:
 
@@ -561,12 +601,30 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 			Internal use only.
 
 		CtagsFileLocation                Link:|TagHL-CtagsFileLocation|
-		   Internal use only.
+			Internal use only.
 
 		TypesFileLocation                Link:|TagHL-TypesFileLocation|
-		   Internal use only.
+			Internal use only.
 
 2.4.4 Option Details                     *TagHighlight-option-details*      {{{3
+
+	CtagsArguments                       *TagHL-CtagsArguments*
+		This option allows advanced users to specify an explicit list of
+		arguments to pass to ctags.  In most cases, you won't want to use
+		this, but if |TagHL-CtagsExecutable| is pointing to a non-recognised
+		version of ctags, you may need to specify custom arguments in order to
+		get it to work with |TagHighlight|.  Before using this, consider the
+		option |TagHL-CtagsVariant|.  If you do use CtagsArguments, please get
+		in touch and let me know why: I might be able to create a new
+		CtagsVariant to do whatever you need.
+
+		Note: this should not be used to add additional arguments to ctags.
+		This explcitly sets ALL of the parameters that are passed to ctags,
+		replacing all the ones that TagHighlight would usually use.  If you
+		just want to add an option to ctags, see |TagHL-CtagsExtraArguments|.
+
+		Option Type: List
+		Default: [] (empty list)
 
 	CtagsExeFull                         *TagHL-CtagsExeFull*
 		Used internally to tell the python part of the application where ctags
@@ -582,6 +640,16 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 		Option Type: String
 		Default: "ctags"
 
+	CtagsExtraArguments                  *TagHL-CtagsExtraArguments*
+		This can be used to add a list of extra arguments for ctags to the
+		ones normally used by TagHighlight.  This should be used if you want
+		to customise the operation of ctags in some way not supported by
+		TagHighlight.  If you use this option, please let me know: I might be
+		able to add a TagHighlight option specific for your use case.
+
+		Option Type: List
+		Default: [] (empty list)
+
 	CtagsFileLocation                    *TagHL-CtagsFileLocation*
 		Used internally to handle the location of the tag file.  Do not use
 		this option as it will be automatically overwritten.  Instead, see
@@ -589,6 +657,17 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 		|TagHL-TagFileDirectory|.
 
 		See also |TagHL-TagFileName|.
+
+	CtagsVariant                         *TagHL-CtagsVariant*
+		Some variants of ctags expect different arguments to exuberant ctags.
+		This option allows you to tell |TagHighlight| to provide the arguments
+		in a different form.  Currently supported values for this option are
+		"exuberant" for the standard implementation and "jsctags" for jsctags.
+		Note that if you're using this option, you probably also want to set
+		|TagHL-CtagsExecutable| to something other than "ctags".
+
+		Option Type: String
+		Default: "exuberant"
 
 	DebugFile                            *TagHL-DebugFile*
 		If set to something other than "None" (the default), write debugging
@@ -704,6 +783,24 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 		Option Type: Boolean
 		Default: False
 
+	DisableTagManager                     *TagHL-DisableTagManager*
+		The TagManager automatically sets up the 'tags' option to include the
+		generated tags file along with any tags files for user libraries (see
+		|TagHL-UserLibraries|).  This option can be used to disable the
+		TagManager.
+	
+		If the TagManager is enabled, the generated tags file will be added to
+		the 'tags' option; this makes it much easier to work with complex
+		directory structures while maintaining a common tags file.
+		If user libraries are configured and there is a tags file in the same
+		directory as the library .taghl file (with a filename that matches the
+		|TagHL-TagFileName| option), the TagManager will add the library tags
+		file to the 'tags' option to enable easy navigation to library source
+		code.
+
+		Option Type: Boolean
+		Default: False
+
 	DisableTypeParsing                   *TagHL-DisableTypeParsing*
 		This option disables loading of types highlighter files: no custom
 		types will be highlighted.
@@ -714,10 +811,22 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 	DoNotGenerateTags                    *TagHL-DoNotGenerateTags*
 		If this option is set, calling |:UpdateTypesFile| will be functionally
 		equivalent to calling |:UpdateTypesFileOnly|: it will be assumed that
-		a tag file already exists and ctags will not be run.
+		a tag file already exists and ctags will not be run.  This should be
+		used if you NEVER want |TagHighlight| to generate a tags file.
+		Otherwise, you probably want |TagHL-DoNotGenerateTagsIfPresent|.
 
 		Option Type: Boolean
 		Default: False (generate tags)
+
+	DoNotGenerateTagsIfPresent           *TagHL-DoNotGenerateTagsIfPresent*
+		This option is similar to |TagHL-DoNotGenerateTags|.  However, it only
+		applies if a tags file already exists.  If the tags file exists, it
+		will not be regenerated but will be used as is.  If the tags file does
+		not exist, it will be created.  If |TagHL-DoNotGenerateTags| is set,
+		this option is ignored.
+
+		Option Type: Boolean
+		Default: False (always generate tags)
 
 	ExtensionLanguageOverrides           *TagHL-ExtensionLanguageOverrides*
 		If there are any entries in this dictionary, they will be used to
@@ -804,9 +913,9 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 		highlight definition file.  There are three methods that are
 		available:
 
-			Extension: Look at the extension of the current file and check
-					   for matches with the VimExtensionMatcher in the
-					   language definition files.
+			Extension:  Look at the extension of the current file and check
+						for matches with the VimExtensionMatcher in the
+						language definition files.
 
 			FileType: Look at the file type that has been selected by Vim and
 			          check for matches with the VimFileTypes list in the
@@ -858,6 +967,24 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 
 		Option Type: Integer
 		Default: 0
+
+	OnlyGenerateTypesIfPresent           *TagHL-OnlyGenerateTypesIfPresent*
+		If this option is set, then a new types highlighter file will only be
+		generated if one already exists.  If working on relatively small
+		projects, this can be useful as you can set up an autocmd to
+		regenerate tags and types files when you save:
+>
+			let g:TagHighlightSettings['OnlyGenerateTypesIfPresent'] = 1
+			autocmd BufWritePost * UpdateTypesFile
+<
+		Every time you save a file, |TagHighlight| will check whether a types
+		file exists and if it does, it will regenerate it.  If it doesn't
+		exist, it will do nothing.  For larger projects, this is currently
+		probably not practical due to the time it takes ctags to process the
+		code.
+
+		Option Type: Boolean
+		Default: False (always generate types file)
 
 	ParsingSkipList                      *TagHL-ParsingSkipList*
 		If you're editing a lot of files and for most you want tag highlight
@@ -1004,6 +1131,32 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 
 		Option Type: List
 		Default: [] (no patterns)
+
+	SkipReservedKeywords                 *TagHL-SkipReservedKeywords*
+		This option stops TagHighlight from overriding keywords that are
+		reserved words in the programming language in which they are found.
+		There may be situations in which (for example) ctags includes "bool"
+		in its list of tags for some C++ source code and TagHighlight will
+		then overwrite the default highlighting of "bool" with whatever ctags
+		says that tag type is.  By default, any keywords that match those in
+		the language definition file will be ignored by TagHighlight.  If you
+		want TagHighlight to take over the highlighting of keywords (assuming
+		there is a custom definition somewhere that ctags can find it), set
+		this option to False or 0 and the reserved keywords will be included.
+		
+		If you find that reserved keywords aren't skipped with your chosen
+		programming language, it may be that TagHighlight doesn't know about
+		the reserved keywords for your language.  Please feel free to add them
+		to the language definition file and send me a patch (see the bit about
+		ReservedKeywords in |TagHighlight-adding|) or send me a list of the
+		keywords and I'll do this myself.
+
+		Note that the same effect can be achieved somewhat more laboriously
+		using |TagHL-SkipPatterns| (useful if you only want to skip a subset
+		of the reserved keywords).
+
+		Option Type: Boolean
+		Default: True (don't include reserved keywords)
 
 	SkipVimKeywords                      *TagHL-SkipVimKeywords*
 		As well as being unable to use "syn keyword" for tag names that
@@ -1154,9 +1307,80 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 
 ------------------------------------------------------------------------------
 
-2.5 Installation                         *TagHighlight-install*             {{{2
+2.4 Integration with Other Software      *TagHighlight-integration*         {{{2
 
-2.5.1 Requirements                       *TagHighlight-requirements*        {{{3
+2.5.1 Tagbar Integration                 *TagHighlight-tagbar*              {{{3
+
+	|TagHighlight| can be used to highlight the names of classes etc in the
+	tagbar window (thanks to Alexey Radkov for reporting this).  Tagbar uses
+	its own filetype, so you can configure this with something like:
+>
+		let g:TagHighlightSettings['LanguageDetectionMethods'] =
+			\ ['Extension', 'FileType']
+		let g:TagHighlightSettings['FileTypeLanguageOverrides'] =
+			\ {'tagbar': 'c'}
+<
+	You'll obviously need to change the language preference according to the
+	language in which you program.  In order to use it with different
+	languages in different project, use a |taghl_config.txt| project options
+	file, something like this (customise the language for each file as
+	required):
+>
+		LanguageDetectionMethods:Extension,FileType
+		FileTypeLanguageOverrides:
+			tagbar:c
+		# vim:ff=unix,noet
+<
+	This assumes that you are writing C code; customise as appropriate.
+
+2.5.2 Git Integration                    *TagHighlight-git*                 {{{3
+
+	A similar method to that used with tagbar can be used to highlight git
+	commit messages.  Use something like this in your |taghl_config.txt|
+	project configuration file:
+>
+		LanguageDetectionMethods:
+			Extension,FileType
+		FileTypeLanguageOverrides:
+			gitcommit:python
+		# vim:ff=unix,noet
+<
+	This assumes that you are writing python code; customise as required.
+
+2.5.3 Bazaar Integration                 *TagHighlight-bazaar*              {{{3
+
+	Unfortunately, there is no easy way to highlight tags in Bazaar projects
+	as the commit message is stored in a temporary directory rather than
+	within the project.  If anyone has a suggestion of how to work round this,
+	please let me know.
+
+2.5.4 Mercurial Integration              *TagHighlight-mercurial*           {{{3
+
+	Unfortunately, there is no easy way to highlight tags in Mercurial projects
+	as the commit message is stored in a temporary directory rather than
+	within the project.  If anyone has a suggestion of how to work round this,
+	please let me know.
+
+2.5.5 Subversion Integration             *TagHighlight-subversion*          {{{3
+
+	A similar method to that used with tagbar can be used to highlight
+	subversion commit messages (thanks to Alexey Radkov for reporting this).
+	Use something like this in your |taghl_config.txt| project configuration
+	file:
+>
+		LanguageDetectionMethods:
+			Extension,FileType
+		FileTypeLanguageOverrides:
+			svn:java
+		# vim:ff=unix,noet
+<
+	This assumes that you are writing Java code; customise as required.
+
+------------------------------------------------------------------------------
+
+2.6 Installation                         *TagHighlight-install*             {{{2
+
+2.6.1 Requirements                       *TagHighlight-requirements*        {{{3
 
 	|TagHighlight| consists of some Vim scripts and some Python scripts.  The
 	Vim scripts require a relatively recent Vim (at least version 7).  To use
@@ -1171,7 +1395,7 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 	(including python 3), you can use that.  Finally, there is a (separately
 	distributed) compiled version if you don't have python on your system.
 
-2.5.2 Installation Guide                 *TagHighlight-install-guide*       {{{3
+2.6.2 Installation Guide                 *TagHighlight-install-guide*       {{{3
 
 	Uninstalling ctags_highlighter:      *TagHighlight-remove-old*          {{{4
 
@@ -1189,7 +1413,7 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 		* types_wxpy.vim (if you installed the GUI types addon)
 		* types_android.vim (if you installed the GUI types addon)
 		* types_jdk.vim (if you installed the GUI types addon)
-	
+
 	Installing the main plugin:          *TagHighlight-install-main*        {{{4
 
 		The TagHighlight plugin is distributed as a zip file.  If you are
@@ -1217,7 +1441,7 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 			:helptags path/to/vimfiles/doc
 <
 		as appropriate.
-	
+
 	Installing the compiled version:     *TagHighlight-install-compiled*    {{{4
 
 		If you want to use the compiled version of the plugin (if you do not
@@ -1274,7 +1498,7 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 	* "Qt4": Qt4 (C++)
 	* "wxpython": wxPython (Python; limited support)
 	* "wxWidgets": wxWidgets (C++)
-	
+
 	If a source file is opened that looks like it might be part of one of
 	these libraries, the standard library highlighter is automatically loaded.
 	Forcing loading of a particular library can be achieved using the option
@@ -1327,7 +1551,7 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 			           returns 'Load', load the library; if it returns 'Skip',
 			           do not load the library.  Any other return value is an
 			           error.
-	
+
 	Other options that may be required depending on the CheckMode:
 
 		MatchREs - list of Vim regular expressions to compare against the
@@ -1349,96 +1573,138 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 
 4.1 Adding More Languages                *TagHighlight-adding*              {{{2
 
-	1. Run ctags --list-languages and check that the required language is
-	   present.
-	   
-	2. If you're using a custom version of ctags highlighter with extra
-	   languages, you may need to add the details to the kind list in
-	   plugin/TagHighlight/data/kinds.txt (for most standard languages, this
-	   won't be necessary).  To do this, run:
+	1.  Run ctags --list-languages and check that the required language is
+		present.
+
+	2.  If you're using a custom version of ctags highlighter with extra
+		languages, you may need to add the details to the kind list in
+	   	plugin/TagHighlight/data/kinds.txt (for most standard languages, this
+	   	won't be necessary).  To do this, run:
 >
 			ctags --list-kinds=all
 <
-	   and examine the entries for your language.
+		and examine the entries for your language.
 
-	3. Create a new file in plugin/TagHighlight/data/languages/ with a .txt
-	   extension (the file name can be anything you want).  Set the fileformat
-	   to be 'unix' for consistency and don't expand tabs in case you need to
-	   add any multi-line lists:
+	3.  Create a new file in plugin/TagHighlight/data/languages/ with a .txt
+		extension (the file name can be anything you want).  Set the fileformat
+	   	to be 'unix' for consistency and don't expand tabs in case you need to
+	   	add any multi-line lists:
 >
 			set ff=unix noet
 <
-	4. In that file, add the following fields in Key:Value format (one per
-	   line):
+	4.  In that file, add the following fields in Key:Value format (one per
+		line):
 
 		FriendlyName - Whatever you prefer to call the language.
 
 		CTagsName - Whatever ctags refers to the language as.
 
-		PythonExtensionMatcher - A python regular expression that matches
-					             the extensions of files that are written
-					             in this language.
+		PythonExtensionMatcher -	A python regular expression that matches
+									the extensions of files that are written
+									in this language.
 
-		VimExtensionMatcher - The Vim regular expression version of
-				              PythonExtensionMatcher.
+		VimExtensionMatcher -	The Vim regular expression version of
+								PythonExtensionMatcher.
 
-		VimFileTypes - A list of Vim file types (the output of the Vim command
-		               ":set ft?") that are relevant for this language.
+		VimFileTypes -  A list of Vim file types (the output of the Vim command
+						":set ft?") that are relevant for this language.
 
-		VimSyntaxes - A list of Vim syntax names (the output of the Vim
-		              command ":set syntax?") that are relevant for this
-		              language.
+		VimSyntaxes -   A list of Vim syntax names (the output of the Vim
+						command ":set syntax?") that are relevant for this
+						language.
 
-		Suffix - Whatever you would like the generated files to be named,
-			     e.g. for C code, the suffix is c and the generated files
-			     are by default called types_c.taghl.
+		Suffix -	Whatever you would like the generated files to be named,
+					e.g. for C code, the suffix is c and the generated files
+					are by default called types_c.taghl.
 
-	5. Optionally, add other fields as required:
+	5.  Optionally, add other fields as required:
 
-		SkipList - Any specific ctags "kinds" (single characters referring
-			       to types of tags) that you want to omit from the types
-			       file.  For example, for C code, function prototypes are
-			       omitted (function definitions are included) by setting
-			       SkipList to p.  To include multiple items, separate
-			       each item with a comma.  To see a list of kinds for a
-			       language, use:
+		ReservedKeywords - This is a list of predefined keywords for a given
+		                   language - those keywords that are typically
+		                   designated 'reserved words' in the language
+		                   documentation.  This is used when a user specifies
+		                   the |TagHL-SkipReservedKeywords| option.  This
+		                   option can either be specified as a list of
+		                   comma-separated keywords on a single line, as a
+		                   list of keywords one per line or (more
+		                   conveniently) as a list of keywords with several
+		                   per-line separated by spaces:
+>
+                            # Example 1:
+							ReservedKeywords:bool,asm,break,case
+							# Example 2:
+							ReservedKeywords:
+								bool
+								asm
+								break
+								case
+							# Example 3:
+							ReservedKeywords:
+								bool asm break
+								case
+<
+						   See the examples in the existing language
+						   definitions for details.
+
+		SkipList -  Any specific ctags "kinds" (single characters referring
+					to types of tags) that you want to omit from the types
+					file.  For example, for C code, function prototypes are
+			       	omitted (function definitions are included) by setting
+			       	SkipList to p.  To include multiple items, separate
+			       	each item with a comma.  To see a list of kinds for a
+			       	language, use:
 >
 						ctags --list-kinds
 <
 		SpecialSyntaxHandlers - This is for unusual cases where particular
-					            syntax commands are required for a given
-					            language.  Add any functions you want to
-					            call here.  As an example, for Java code,
-					            all syntax items must be added to the
-					            javaTop cluster; this is done in a special
-					            syntax handler.  For most languages this
-					            is unnecessary.
+								syntax commands are required for a given
+								language.  Add any functions you want to
+								call here.  As an example, for Java code,
+								all syntax items must be added to the
+								javaTop cluster; this is done in a special
+								syntax handler.  For most languages this
+								is unnecessary.
 
-		Priority - Where a tag name is used for multiple different types (e.g.
-		           as a defined name and as a typedef), it can only be
-		           highlighted as one or the other (Vim is not aware of the
-		           context of the keyword).  The priority defines whether it
-		           should (in this case) be highlighted as a defined name or
-		           as a typedef.  The default priority order is shown in
-		           plugin/TagHighlight/data/language_defaults.txt.  Entries
-		           not included in the priority list are treated in
-		           alphabetical order after the ones that are in the priority
-				   list.  If the default priority is not appropriate for the
-				   new language, it can be overridden in the language
-				   definition.
+		Priority -  Where a tag name is used for multiple different types (e.g.
+					as a defined name and as a typedef), it can only be
+					highlighted as one or the other (Vim is not aware of the
+		           	context of the keyword).  The priority defines whether it
+		           	should (in this case) be highlighted as a defined name or
+		           	as a typedef.  The default priority order is shown in
+		           	plugin/TagHighlight/data/language_defaults.txt.  Entries
+		           	not included in the priority list are treated in
+		           	alphabetical order after the ones that are in the priority
+				   	list.  If the default priority is not appropriate for the
+				   	new language, it can be overridden in the language
+				   	definition.
 
 		IsKeyword - Most source files have Vim's |'iskeyword'| option set to
-		            @,48-57,_,192-255.  If that is incorrect for the language
+					@,48-57,_,192-255.  If that is incorrect for the language
 					that you are defining, it can be changed in the new
 					language definition.  Generally not really required.
 
-	6. Add a modeline for consistency:
+	6.  Add a modeline for consistency:
 >
 		# vim: ff=unix:noet
 <
-	7. Test your new language!
+	7.  Test your new language!
 
-	8. Send me a copy for inclusion in the main distribution.
+	8.  Send me a copy for inclusion in the main distribution.  If you're
+		sending it to me as a bitbucket pull request, it would help enormously
+		if you could also also:
+
+		* Update the list of languages (|TagHighlight-languages|) in this
+		  file.
+		* Update the list of languages in README.md (shown on the bitbucket
+	   	  front page).
+	   	* Add a note in the latest entry in the change log in this file
+	      (|TagHighlight-history|).  If there isn't an entry there for an
+		  unreleased version, please add one: something like
+>
+			x.x.x: xxth Xxxxxxxx 2012  : Added support for LANGUAGE.
+<
+		  (leave the x characters in: I'll change these when I release the
+		  code).
 
 4.1.1 Example                            *TagHighlight-add-example*         {{{3
 
@@ -1461,7 +1727,70 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 	It really is that easy!
 
 ==============================================================================
-5. Troubleshooting                       *TagHighlight-troubleshooting*     {{{1
+5. Contributing Changes                  *TagHighlight-contributions*       {{{1
+
+	Contributions to TagHighlight are, of course, very welcome.  The bug
+	tracker is currently private (due to it running on my home server behind a
+	firewall) and this is unlikely to change in the near future.  However, the
+	code is public and I am happy to accept, patches or suggestions for
+	improvements and usage examples.
+
+5.1 Suggestions for Improvements         *TagHighlight-suggestions*         {{{2
+
+	For suggestions for improvements, please send me an email to:
+>
+		abudden _AT_ gmail.com
+<
+	Please include as much detail as possible.
+
+5.2 Patches                              *TagHighlight-patches*             {{{2
+
+	If you've made an improvement to TagHighlight and would like your changes
+	to be included in the main distribution, there are a number of ways of
+	doing this.  The code is maintained in a Mercurial repository and
+	published on bitbucket.  In rough order of preference, the ways you can
+	send me a patch are:
+
+		1. Bitbucket pull request (https://bitbucket.org/abudden/taghighlight)
+
+		2. Mercurial bundle (see "hg help bundle") attached to an email.
+
+		3. Mercurial patchbomb email (for details of the patchbomb extension,
+		please see http://mercurial.selenic.com/wiki/PatchbombExtension).
+
+	If sending a patch, please follow these guidelines:
+
+	* Could should conform to the same general coding standard as the existing
+	  source tree.  This isn't especially strict or well documented, but at
+	  the very least python code should be indented with four spaces and
+	  everything else should be indented with hard tabs but alignment should
+	  be with spaces.  As a general guide, '^\t\+' is good but either '\S\t'
+	  or '^\s\+' is bad (there are exceptions).
+
+	* Please help to maintain the documentation at the same time, including:
+
+		- The history in |TagHighlight-history|: if there isn't an entry there
+		  for an unreleased version, pease add one, something like:
+>
+			x.x.x: xxth Xxxxxxxx 2012  : Added support for LANGUAGE.
+<
+		  (leave the x characters in, I'll change these when I release the
+		  next version).
+
+		- Any options that have been added: add these both to the categorised
+		  |TagHighlight-option-list| and the alphabetic (and more detailed)
+		  |TagHighlight-option-summary|.
+
+5.3 Usage Examples                       *TagHighlight-usage-examples*      {{{2
+
+	There is a wiki available at:
+>
+		https://bitbucket.org/abudden/taghighlight/wiki/Home
+<
+	Please feel free to add usage examples to this page.
+
+==============================================================================
+6. Troubleshooting                       *TagHighlight-troubleshooting*     {{{1
 
 	A debugging log can be generated by running the command:
 >
@@ -1484,9 +1813,73 @@ Copyright:  (c) 2009-2011 by A. S. Budden             *TagHighlight-copyright*
 		:let g:TagHighlightSettings['DebugFile'] = '/path/to/typesonly.log'
 		:UpdateTypesFileOnly
 <
+==============================================================================
+7. Credits                             *TagHighlight-credits*               {{{1
+
+	Software:
+
+		Al Budden - Lead Developer
+
+	Additional Languages:
+
+		Aleksey Baibarin - C# Support (and suggestions for other improvements)
+		Ali Hamdi - Go Support (and suggestions for other improvements)
+		Lee Gauthier - Scala Support
+		Oleg Lebedev - Fortran Support
+		Piotr Yordanov - Javascript support (and other suggestions)
+
+	Suggestions for Improvement and Testing:
+
+		Alan Warren - Suggestions for Improvement
+		Alexey Radkov - Suggestions for Improvement
+		Hong Xu - Suggestions for Improvement
+		Marcus Martin - Testing & Suggestions
+		Mishail - Testing & Suggestions
+		Prasun Ratn - Testing & Suggestions
+		Yongwei Wu - Testing & Suggestions
+
+	Additional credits from the predecessor (ctags_highlighting):
+
+		Mikhail Stepura - better handling of paths with spaces
+		Sung Pae - customisation of tags file name
 
 ==============================================================================
-6. TagHighlight History                *TagHighlight-history*               {{{1
+8. TagHighlight History                *TagHighlight-history*               {{{1
+
+x.x.x: xxth Xxxxxxxx 2012  : Fixed globpath to prevent use of wildignore
+                             option (thanks to Vincent).  Added support for
+                             Javascript (thanks to Piotr Yordanov).
+                             Transferred source repository from git to
+							 mercurial.  Added support for custom ctags
+							 argument lists (option CtagsArguments) in order
+							 to allow use with versions of ctags (like
+							 jsctags) that don't accept the same arguments as
+							 exuberant ctags (thanks to Piotr Yordanov for the
+							 suggestion and help getting jsctags working).
+							 Also added support for CtagsVariant arguments to
+							 simplify this process for known variants.
+							 Support for jsctags is still fairly flaky as
+							 jsctags seems to fail very easily (and I've only
+							 used it for generating tags for its own source
+							 code!).  Added a reference (in the documentation)
+							 to the new wiki.  Added initial version of a
+							 manager for the 'tags' option to automatically
+							 handle tag files for user libraries (thanks to
+							 Alexey Radkov and Ali Hamdi).  Fixed a bug in the
+							 ParsingSkipList option implementation.  Added
+							 option to only generate the tags file if one is
+							 not present or to only generate types file if one
+							 IS present (thanks to Ali Hamdi for the
+							 suggestion).  Added CtagsExtraArguments and
+							 clarified what is meant by CtagsArguments (thanks
+							 to Alan Warren for the suggestion).  Added
+							 support for skipping reserved keywords for given
+							 languages when generating types files.  Initially
+							 the reserved keywords have been recorded for C++,
+							 Python, Java and C#.  Thanks to Alexey Radkov and
+							 Alan Warren for the suggestions.
+
+2.1.5: 20th February 2012  : Added support for Scala (thanks to Lee Gauthier).
 
 2.1.4: 15th December 2011  : Improved internal modeline to make addition of
                              languages more straightforward.  Added support

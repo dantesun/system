@@ -12,7 +12,7 @@
 
 " ---------------------------------------------------------------------
 try
-	if &cp || (exists('g:loaded_TagHLFind') && (g:plugin_development_mode != 1))
+	if &cp || v:version < 700 || (exists('g:loaded_TagHLFind') && (g:plugin_development_mode != 1))
 		throw "Already loaded"
 	endif
 catch
@@ -129,24 +129,40 @@ function! TagHighlight#Find#LocateFile(which, suffix)
 				let result['Filename'] = filename
 			endif
 		elseif search_mode == 'CurrentDirectory'
-			call TagHLDebug('Using current directory', 'Information')
+			call TagHLDebug('Using current directory: ' . fnamemodify('.', ':p:h'), 'Information')
 			let result['Directory'] = fnamemodify('.',':p:h')
 			let result['Filename'] = filename
 		elseif search_mode == 'FileDirectory'
-			call TagHLDebug('Using file directory', 'Information')
+			call TagHLDebug('Using file directory: ' . fnamemodify(file, ':p:h'), 'Information')
 			let result['Directory'] = fnamemodify(file,':p:h')
 			let result['Filename'] = filename
 		endif
 		if has_key(result, 'Directory')
 			let result['FullPath'] = result['Directory'] . '/' . result['Filename']
 			let result['Found'] = 1
-			call TagHLDebug('Found file location', 'Information')
+			call TagHLDebug('Found file location: ' . result['FullPath'], 'Information')
 			if filereadable(result['FullPath'])
 				call TagHLDebug('File exists', 'Information')
 				let result['Exists'] = 1
 			else
-				call TagHLDebug('File does not exist', 'Information')
-				let result['Exists'] = 0
+				" Handle wildcards
+				let expansion = split(glob(result['FullPath'], 1), '\n')
+				let wildcard_match = 0
+				if len(expansion) > 0
+					for entry in expansion
+						if filereadable(entry)
+							let result['FullPath'] = entry
+							let result['Exists'] = 1
+							let wildcard_match = 1
+							break
+						endif
+					endfor
+				endif
+
+				if wildcard_match == 0
+					call TagHLDebug('File does not exist', 'Information')
+					let result['Exists'] = 0
+				endif
 			endif
 			break
 		endif

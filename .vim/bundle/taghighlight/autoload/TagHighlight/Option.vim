@@ -12,7 +12,7 @@
 
 " ---------------------------------------------------------------------
 try
-	if &cp || (exists('g:loaded_TagHLOption') && (g:plugin_development_mode != 1))
+	if &cp || v:version < 700 || (exists('g:loaded_TagHLOption') && (g:plugin_development_mode != 1))
 		throw "Already loaded"
 	endif
 catch
@@ -28,6 +28,7 @@ function! TagHighlight#Option#LoadOptionFileIfPresent()
 
 	" Check whether we've found the option file
 	if ! option_file['Exists']
+		call TagHLDebug("No project config file", "Information")
 		return
 	endif
 
