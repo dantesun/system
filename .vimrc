@@ -522,6 +522,10 @@ nnoremap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => ack.vim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
 " => CtrlP
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set wildignore+=*.o,*.obj,.git,*.pyc,*.class
