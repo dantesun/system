@@ -137,7 +137,7 @@ set wrap "Wrap lines
 "  In visual mode when you press * or # to search for the current selection
 vnoremap <silent> * :call VisualSearch('f')<CR>
 vnoremap <silent> # :call VisualSearch('b')<CR>
-vnoremap <C-h> ""y:%s/<C-R>=escape(@", '~./\')<CR>//gc<Left><Left><Left>
+vnoremap <leader>S ""y:%s/<C-R>=escape(@", '~./\')<CR>//gc<Left><Left><Left>
 
 " When you press gv you vimgrep after the selected text
 vnoremap <silent> gv :call VisualSearch('gv')<CR>
