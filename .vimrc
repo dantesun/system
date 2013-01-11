@@ -583,6 +583,7 @@ nnoremap <leader>r :CtrlPMRUFiles<CR>
 nnoremap <leader>t :CtrlPBufTag<CR>
 nnoremap <leader>T :CtrlPBufTagAll<CR>
 nnoremap <leader>m :CtrlPBookmarkDir<CR>
+nnoremap <leader>b :CtrlPBuffer<CR>
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_max_height = 50
 "let g:ctrlp_working_path_mode = 'rw'
