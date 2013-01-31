@@ -6,19 +6,23 @@ shopt -s histappend
 export CDPATH=".:..:../..:~:~/fusion.main/fusion/components/services"
 
 #export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dsun.awt.disablegrab=true' 
-export PATH=$HOME/tools/bin:$HOME/tools/sbin:$PATH
+TOOL_PATH=$HOME/tools/bin:$HOME/tools/sbin
 if [ "Darwin" = `uname -s` ]; then
+  # This is for HomeBrew on MacOS
   if which brew &> /dev/null; then
-    PHP_PATH="$(brew --prefix php54)/bin"
+#    PHP_PATH="$(brew --prefix php54)/bin"
     CURL_PATH="$(brew --prefix curl)/bin"
     COREUTIL_PATH="$(brew --prefix coreutils)/libexec/gnubin"
     FINDUTILS_PATH="$(brew --prefix findutils)/bin"
     CTAGS_PATH="$(brew --prefix ctags)/bin"
     GETTEXT_PATH="$(brew --prefix gettext)/bin"
-    export PATH=$COREUTIL_PATH:$CURL_PATH:$PHP_PATH:$FINDUTILS_PATH:$CTAGS_PATH:$GETTEXT_PATH:$PATH
+    BREW_AUX_PATH="$COREUTIL_PATH:$CURL_PATH:$PHP_PATH:$FINDUTILS_PATH:$CTAGS_PATH:$GETTEXT_PATH"
     alias find=gfind
   fi
 fi
+#Note: on MacOS /etc/paths will make /usr/local/bin the last element in PATH, must explicitly append /usr/local/bin before PATH
+export PATH=/usr/local/bin:$BREW_AUX_PATH:$TOOL_PATH:$PATH
+
 export P4EDITOR=vim
 export P4CONFIG=.p4config
 export EDITOR=vim
