@@ -62,6 +62,7 @@ augroup END
 
 au Filetype html,xsl,eruby,xml source ~/.vim/bundle/closetag/plugin/closetag.vim
 
+:let g:xml_syntax_folding = 1
 set viminfo='20,\"50	" read/write a .viminfo file, don't store more
 			" than 50 lines of registers
 set cursorline
@@ -507,7 +508,7 @@ let g:tagbar_width = 30
 " => ctags http://vim.wikia.com/wiki/C%2B%2B_code_completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Make the vim search tag file from current directory all the way up to root dir
-set tags=tags
+set tags=tags;
 set tags+=~/system/stl.tags
 let OmniCpp_NamespaceSearch = 1
 let OmniCpp_GlobalScopeSearch = 0
@@ -520,8 +521,8 @@ let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 let OmniCpp_LocalSearchDecl = 1
 " automatically open and close the popup menu / preview window
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-"set completeopt=menuone,menu,longest,preview
-set completeopt=menuone,menu,longest
+set completeopt=menuone,menu,longest,preview
+"set completeopt=menuone,menu,longest
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
 " Cscope  
