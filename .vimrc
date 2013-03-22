@@ -468,6 +468,24 @@ autocmd vimenter * if !argc() |  NERDTree | endif
 let NERDTreeChDirMode = 2
 let NERDTreeWinPos="right"
 
+" Prevent :bd inside NERDTree buffer
+au FileType nerdtree cnoreabbrev <buffer> bd <nop>
+au FileType nerdtree cnoreabbrev <buffer> BD <nop>
+
+autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
+
+" Close all open buffers on entering a window if the only
+" buffer that's left is the NERDTree buffer
+function! s:CloseIfOnlyNerdTreeLeft()
+  if exists("t:NERDTreeBufName")
+    if bufwinnr(t:NERDTreeBufName) != -1
+      if winnr("$") == 1
+        q
+      endif
+    endif
+  endif
+endfunction
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Java Syntax
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -592,7 +610,7 @@ nnoremap <leader>r :CtrlPMRUFiles<CR>
 nnoremap <leader>t :CtrlPBufTag<CR>
 nnoremap <leader>T :CtrlPBufTagAll<CR>
 nnoremap <leader>m :CtrlPBookmarkDir<CR>
-nnoremap <leader>b :CtrlPBuffer<CR>
+nnoremap <leader>o :CtrlPBuffer<CR>
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_max_height = 50
 "let g:ctrlp_working_path_mode = 'rw'
@@ -602,7 +620,7 @@ let g:ctrlp_by_filename = 1
 "      \ 'dir':  '\v[\/](bin\/fusion-rhel-x86_64-gnu|fusion\/build\/root|fusion\/components\/(fusion\.mgmt|gui)|fusion\/(testing|commons|os)|fusion\/thirdparty\/images)$',
 "      \ 'file': '\v\.(d|so|dll)$',
 "      \ }
-let g:ctrlp_user_command = 'ack -f --nojava --ignore-dir=os --ignore-dir=testing %s'       " MacOSX/Linux
+"let g:ctrlp_user_command = 'ack -f --nojava --ignore-dir=os --ignore-dir=testing %s'       " MacOSX/Linux
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => ConqueTerm
