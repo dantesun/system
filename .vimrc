@@ -1,12 +1,13 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-call pathogen#infect()
-set nocompatible	" Use Vim defaults (much better!)
+set nocompatible
+execute pathogen#infect() 
+
 filetype plugin indent on
+syntax on
 
 
-set mouse-=a " Disable mouse
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = ","
@@ -72,7 +73,7 @@ set cursorline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "set wildmenu "Turn on WiLd menu
 set ruler		" show the cursor position all the time
-set number
+"set number
 " Set backspace config
 set backspace=eol,start,indent
 "set whichwrap+=<,>,h,l
@@ -100,7 +101,6 @@ set tm=500
 syntax enable "Enable syntax hl
 set encoding=utf-8
 set fileencodings=utf-8,chinese,latin1
-set guifont=YaHei\ Consolas\ Hybrid\ 10
 set t_Co=256
 set background=dark
 "colors herald
@@ -175,10 +175,29 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Smart way to move btw. windows
+" Mapping under urxvt
 map j <c-w>j
 map k <C-W>k
 map h <C-W>h
 map l <C-W>l
+" Mapping under gvim
+map <A-j> <c-w>j
+map <A-k> <c-w>k
+map <A-h> <C-W>h
+map <A-l> <C-W>l
+
+" GVIM Options
+" Disable Menu Alt key in GVIM
+set wak=no
+set guioptions-=m  "remove menu bar
+set guioptions-=T  "remove toolbar
+set guioptions-=r  "remove right-hand scroll bar
+set guioptions-=l  "remove left-hand scroll bar
+set guioptions-=L  "remove left-hand scroll bar
+set guioptions-=b  "remove bottom scroll bar
+"set mouse=a " Enable mouse
+set guifont=Monaco\ 10
+
 
 " Window resizing mappings 
 nnoremap + <c-w>+
@@ -227,7 +246,7 @@ command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
 set laststatus=2
 
 "Format the statusline
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c\ %{CurrentTag()}
+"set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c\ %{CurrentTag()}
 
 function! CurrentTag() 
   let current_tag = tagbar#currenttag('[%s] ','', 'f')
@@ -307,6 +326,9 @@ endfunction
 "nmap <M-k> mz:m-2<cr>`z
 vmap j :m'>+<cr>`<my`>mzgv`yo`z
 vmap k :m'<-2<cr>`>my`<mzgv`yo`z
+" Map under gvim
+vmap <A-j> :m'>+<cr>`<my`>mzgv`yo`z
+vmap <A-k> :m'<-2<cr>`>my`<mzgv`yo`z
 "Alt key
 "inoremap  i <ESC>
 
@@ -365,9 +387,9 @@ map <leader>p :cp<cr>
 """"""""""""""""""""""""""""""
 " => bufExplorer plugin
 """"""""""""""""""""""""""""""
-let g:bufExplorerDefaultHelp=0
-let g:bufExplorerShowRelativePath=1
-map <leader>o :BufExplorer<cr>
+"let g:bufExplorerDefaultHelp=0
+"let g:bufExplorerShowRelativePath=1
+"map <leader>o :BufExplorer<cr>
 
 """"""""""""""""""""""""""""""
 " => LESS syntax 
@@ -568,6 +590,13 @@ set cscopequickfix=s-,c-,d-,i-,t-,e-
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
+" Buffergator
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
+let g:buffergator_suppress_keymaps = 1
+map <leader>o :BuffergatorToggle<cr>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
 " autocscope  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
 " Disable autocscope mappings and define my own Cscope mappings  
@@ -600,17 +629,20 @@ command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 "ag is faster than ack
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => CtrlP
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set wildignore+=*.o,*.obj,.git,*.pyc,*.class
 let g:ctrlp_root_markers = ['.bmtoplevelmarker'] 
 let g:ctrlp_clear_cache_on_exit = 0
+"200ms deplay
+let g:ctrlp_lazy_update = 200
 nnoremap <leader>r :CtrlPMRUFiles<CR>
 nnoremap <leader>t :CtrlPBufTag<CR>
 nnoremap <leader>T :CtrlPBufTagAll<CR>
 nnoremap <leader>m :CtrlPBookmarkDir<CR>
-nnoremap <leader>o :CtrlPBuffer<CR>
+nnoremap <leader>b :CtrlPBuffer<CR>
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_max_height = 50
 "let g:ctrlp_working_path_mode = 'rw'
@@ -627,3 +659,7 @@ let g:ctrlp_by_filename = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ConqueTerm_Color = 2
 let g:ConqueTerm_TERM = 'xterm-color'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Perforce
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

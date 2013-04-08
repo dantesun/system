@@ -19,12 +19,15 @@ if [ "Darwin" = `uname -s` ]; then
     BREW_AUX_PATH="$COREUTIL_PATH:$CURL_PATH:$PHP_PATH:$FINDUTILS_PATH:$CTAGS_PATH:$GETTEXT_PATH"
     alias find=gfind
   fi
+  #Note: on MacOS /etc/paths will make /usr/local/bin the last element in PATH, must explicitly append /usr/local/bin before PATH
+  export PATH=/usr/local/bin:$BREW_AUX_PATH:$TOOL_PATH:$PATH
+else
+  export PATH=$TOOL_PATH:$PATH
 fi
-#Note: on MacOS /etc/paths will make /usr/local/bin the last element in PATH, must explicitly append /usr/local/bin before PATH
-export PATH=/usr/local/bin:$BREW_AUX_PATH:$TOOL_PATH:$PATH
 
 export P4EDITOR=vim
 export P4CONFIG=.p4config
+export P4USER=dsun
 export EDITOR=vim
 export DEV_SITE=china
 unset MANPATH
@@ -52,3 +55,20 @@ if which wmname &> /dev/null; then
 fi
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+function p4() 
+{
+  local P4="/usr/local/bin/p4"
+  local VOB_ROOT=`/home/tools/public/bin/getRoot.sh`
+  if [ ! $? = 0 ]; then
+    echo "$VOB_ROOT"
+    return 1
+  fi
+  local P4_CLIENT=`cat $VOB_ROOT/.p4client`
+  if [ ! $? = 0 ]; then
+    echo "$P4CLIENT"
+    return 1
+  fi
+  P4CLIENT="$P4_CLIENT" $P4 $*
+}
+export -f p4
