@@ -85,3 +85,5 @@ function post-review()
 }
 export -f p4
 export -f post-review
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
