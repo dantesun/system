@@ -13,6 +13,9 @@ syntax on
 let mapleader = ","
 let g:mapleader = ","
 
+" Avoiding VIM keep scanning /usr/include when auto-completing 
+set path=.
+
 set history=1000		" keep 1000 lines of command line history
 set autoread
 set hidden
@@ -246,7 +249,7 @@ command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
 set laststatus=2
 
 "Format the statusline
-"set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c\ %{CurrentTag()}
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c\ %{CurrentTag()}
 
 function! CurrentTag() 
   let current_tag = tagbar#currenttag('[%s] ','', 'f')
@@ -627,7 +630,7 @@ command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 " => ack.vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "ag is faster than ack
-let g:ackprg = 'ag --nogroup --nocolor --column'
+let g:ackprg = 'ag --nogroup --nocolor --column --ignore cscope.out --ignore tags --ignore *.java --ignore *.d'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -645,7 +648,7 @@ nnoremap <leader>m :CtrlPBookmarkDir<CR>
 nnoremap <leader>b :CtrlPBuffer<CR>
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_max_height = 50
-"let g:ctrlp_working_path_mode = 'rw'
+let g:ctrlp_working_path_mode = 'rw'
 let g:ctrlp_by_filename = 1
 "Ignore the fusion project directory **/bin/fusion-rhel-x86_64-gnu/
 "let g:ctrlp_custom_ignore = {

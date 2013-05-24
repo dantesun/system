@@ -27,6 +27,7 @@ fi
 
 export P4EDITOR=vim
 export P4CONFIG=.p4config
+export P4DIFF=vimdiff
 export P4USER=dsun
 export EDITOR=vim
 export DEV_SITE=china
@@ -56,34 +57,19 @@ fi
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-function p4client()
-{
-  local VOB_ROOT=`/home/tools/public/bin/getRoot.sh`
-  if [ ! -d "$VOB_ROOT" ]; then
-    echo $VOB_ROOT
-    return 1
-  fi
-  local CLIENT_MARKER="$VOB_ROOT/.p4client"
-  if [ -r "$CLIENT_MARKER" ]; then
-    cat $CLIENT_MARKER
-  else
-    echo "No $CLIENT_MARKER found!"
-    return 1
-  fi
-}
-
-function p4() 
-{
-  local P4="/usr/local/bin/p4"
-  P4CLIENT=`p4client` $P4 $*
-}
-
-function post-review()
-{
-  local POST_REVIEW="/home/tools/public/bin/post-review"
-  P4CLIENT=`p4client` $POST_REVIEW $*
-}
-export -f p4
-export -f post-review
-
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+function bmroot() {
+  cd `getRoot.sh`
+}
+
+function bmcfgmgr() {
+  VOB_ROOT=`getRoot.sh`
+  if [ -d "$VOB_ROOT" ]; then
+    SUB_DIR="configMgr"
+    if ! [ -z "$1" ]; then
+      SUB_DIR=$1
+    fi
+    cd $VOB_ROOT/fusion/components/services/$SUB_DIR
+  fi
+}
