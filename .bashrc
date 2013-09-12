@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash
+#!/bin/bash
 # .bashrc
 
 # Make Bash append rather than overwrite the history on disk
@@ -25,12 +25,6 @@ else
   export PATH=$TOOL_PATH:$PATH
 fi
 
-export P4EDITOR=vim
-export P4CONFIG=.p4config
-export P4DIFF=vimdiff
-export P4USER=dsun
-export EDITOR=vim
-export DEV_SITE=china
 unset MANPATH
 export MANPATH=$HOME/tools/share/man:$(manpath)
 
@@ -42,13 +36,10 @@ alias cp='cp -i'
 alias rm='rm -i'
 alias tmux='tmux -2'
 
-[[ -f .bash_functions ]] && . .bash_functions
+[[ -f $HOME/.bash_functions ]] && . $HOME/.bash_functions
 
 #Solarized Theme
 [[ -f $HOME/.dircolors ]] && eval `dircolors $HOME/.dircolors`
-
-alias systray='trayer --expand true --widthtype request --transparent true --alpha 255 --edge top --align right --SetDockType false'
-alias rdesktop='rdesktop -z -u dsun -d bytemobile.com'
 
 #Fix the Java AWT problem
 if which wmname &> /dev/null; then
@@ -59,17 +50,6 @@ fi
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
-function bmroot() {
-  cd `getRoot.sh`
-}
+# A file for customization of environment
+[[ -f "$HOME/.bash_custom" ]] && source  "$HOME/.bash_custom"
 
-function bmcfgmgr() {
-  VOB_ROOT=`getRoot.sh`
-  if [ -d "$VOB_ROOT" ]; then
-    SUB_DIR="configMgr"
-    if ! [ -z "$1" ]; then
-      SUB_DIR=$1
-    fi
-    cd $VOB_ROOT/fusion/components/services/$SUB_DIR
-  fi
-}

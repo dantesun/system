@@ -630,7 +630,7 @@ command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 " => ack.vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "ag is faster than ack
-let g:ackprg = 'ag --nogroup --nocolor --column --ignore cscope.out --ignore tags --ignore *.java --ignore *.d'
+"let g:ackprg = 'ag --nogroup --nocolor --column --ignore cscope.out --ignore tags --ignore *.java --ignore *.d'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
