@@ -15,7 +15,7 @@ fi
 cd $__hgrepo
 
 ./configure --prefix=$HOME/tools/ \
-  --with-features=big --with-compiledby='Dante Sun'\
+  --with-features=huge --with-compiledby='Dante Sun'\
   --enable-gpm --enable-acl --with-x=yes \
   --enable-gui=gtk2 --enable-multibyte --enable-cscope \
   --enable-netbeans --enable-perlinterp --enable-pythoninterp \
