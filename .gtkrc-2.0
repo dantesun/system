@@ -1,5 +1,5 @@
-#include ".gtkrc-solarized"
-gtk-theme-name = "Clearlooks"
+include ".gtkrc-solarized"
+#gtk-theme-name = "Clearlooks"
 #gtk-theme-name = "Elegant Googol"
 gtk-font-name = "Yahei Consolas Hybrid 9"
 style "gtkcompact" {

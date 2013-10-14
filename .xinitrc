@@ -21,7 +21,9 @@ export LC_CTYPE="zh_CN.UTF-8"
 #exec scrotwm
 xscreensaver -nosplash &
 #ibus-daemon -d -x &
+#kopete &
 pidgin &
+parcellite &
 wmname LG3D
 #setup XIM environment
 export GTK_IM_MODULE=fcitx
