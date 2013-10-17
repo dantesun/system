@@ -46,10 +46,6 @@ if which wmname &> /dev/null; then
   [[ -z $DISPLAY ]] || wmname LG3D
 fi
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-
 # A file for customization of environment
 [[ -f "$HOME/.bash_custom" ]] && source  "$HOME/.bash_custom"
 
