@@ -192,7 +192,7 @@ map <A-l> <C-W>l
 " GVIM Options
 " Disable Menu Alt key in GVIM
 set wak=no
-set guioptions-=m  "remove menu bar
+"set guioptions-=m  "remove menu bar
 set guioptions-=T  "remove toolbar
 set guioptions-=r  "remove right-hand scroll bar
 set guioptions-=l  "remove left-hand scroll bar
@@ -249,7 +249,7 @@ command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
 set laststatus=2
 
 "Format the statusline
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c
+set statusline=\ %{HasPaste()}%F%m%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ %{CurrentTag()}\ Line:\ %l/%L:%c
 
 function! CurrentTag() 
   let current_tag = tagbar#currenttag('[%s] ','', 'f')
@@ -274,52 +274,6 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 iab xdate <c-r>=strftime("[%y-%m-%d %H:%M:%S]")<cr>
 
-nmap <leader>cm :CopyDefinition<CR>
-nmap <leader>cM :ImplementDefinition<CR>
-
-command! CopyDefinition :call s:GetDefinitionInfo()
-command! ImplementDefinition :call s:ImplementDefinition()
-function! s:GetDefinitionInfo()
-  exe 'normal ma'
-  " Get class
-  call search('^\s*\<class\>', 'b')
-  exe 'normal ^w"ayw'
-  let s:class = @a
-  let l:ns = search('^\s*\<namespace\>', 'b')
-  " Get namespace
-  if l:ns != 0
-    exe 'normal ^w"ayw'
-    let s:namespace = @a
-  else
-    let s:namespace = ''
-  endif
-  " Go back to definition
-  exe 'normal `a'
-  exe 'normal "aY'
-  let s:defline = substitute(@a, ';\n', '', '')
-endfunction
- 
-function! s:ImplementDefinition()
-  call append('.', s:defline)
-  exe 'normal j'
-  " Remove keywords
-  s/\<virtual\>\s*//e
-  s/\<static\>\s*//e
-  if s:namespace == ''
-    let l:classString = s:class . "::"
-  else
-    let l:classString = s:namespace . "::" . s:class . "::"
-  endif
-  " Remove default parameters
-  s/\s\{-}=\s\{-}[^,)]\{1,}//e
-  " Add class qualifier
-  exe 'normal ^f(bi' . l:classString
-  " Add brackets
-  exe "normal $o{\<CR>\<TAB>\<CR>}\<CR>\<ESC>kkkk"
-  " Fix indentation
-  exe 'normal =4j^'
-endfunction
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -335,14 +289,6 @@ vmap <A-k> :m'<-2<cr>`>my`<mzgv`yo`z
 "Alt key
 "inoremap  i <ESC>
 
-
-"Delete trailing white space, useful for Python ;)
-func! DeleteTrailingWS()
-  exe "normal mz"
-  %s/\s\+$//ge
-  exe "normal `z"
-endfunc
-autocmd BufWrite *.py :call DeleteTrailingWS()
 
 " pressing < or > will let you indent/unident selected lines
 vnoremap < <gv
@@ -558,6 +504,8 @@ let g:tagbar_left = 1
 let g:tagbar_width = 30
 let g:tagbar_autofocus = 0
 let g:tagbar_indent = 1
+autocmd BufNewFile,BufReadPre,BufReadPost cfgMgr.h let b:tagbar_ignore = 1
+autocmd BufNewFile,BufReadPre,BufReadPost RcObjectGen.cc let b:tagbar_ignore = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => ctags http://vim.wikia.com/wiki/C%2B%2B_code_completion
