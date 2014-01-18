@@ -608,5 +608,7 @@ let g:ConqueTerm_Color = 2
 let g:ConqueTerm_TERM = 'xterm-color'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Perforce
+" => PyMode
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:pymode_lint_ignore = "W0401,E501,E401"
+
