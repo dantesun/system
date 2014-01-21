@@ -590,6 +590,8 @@ nnoremap <leader>r :CtrlPMRUFiles<CR>
 nnoremap <leader>t :CtrlPBufTag<CR>
 nnoremap <leader>T :CtrlPBufTagAll<CR>
 nnoremap <leader>m :CtrlPBookmarkDir<CR>
+nnoremap <leader>b :CtrlPBuffer<CR>
+
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_max_height = 50
 let g:ctrlp_working_path_mode = 'rw'
@@ -611,4 +613,6 @@ let g:ConqueTerm_TERM = 'xterm-color'
 " => PyMode
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:pymode_lint_ignore = "W0401,E501,E401"
+let g:pymode_breakpoint_bind = '<leader>B' " <leader>b is used by Ctrl+P
+let g:pymode_run_bind = '<leader>R' " <leader>r is used by Ctrl+P
 
