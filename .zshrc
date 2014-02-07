@@ -1,6 +1,6 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
-
+DISABLE_AUTO_UPDATE=true
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
@@ -8,10 +8,40 @@ ZSH=$HOME/.oh-my-zsh
 # ZSH_THEME="robbyrussell"
 # ZSH_THEME="agnoster"
 ZSH_THEME="powerline"
-POWERLINE_RIGHT_B="none"
+# POWERLINE_RIGHT_B="date"
 POWERLINE_RIGHT_A="exit-status"
 POWERLINE_DETECT_SSH="true"
 POWERLINE_NO_BLANK_LINE="true"
+
+TOOL_PATH=$HOME/tools/bin:$HOME/tools/sbin
+if [ "Darwin" = `uname -s` ]; then
+  #Note: on MacOS /etc/paths will make /usr/local/bin the last element in PATH, must explicitly append /usr/local/bin before PATH
+  export PATH=/usr/local/bin:$PATH
+  # This is for HomeBrew on MacOS
+  if which brew &> /dev/null; then
+    CURL_PATH="$(brew --prefix curl)/bin"
+    COREUTIL_PATH="$(brew --prefix coreutils)/libexec/gnubin"
+    FINDUTILS_PATH="$(brew --prefix findutils)/bin"
+    CTAGS_PATH="$(brew --prefix ctags)/bin"
+    GETTEXT_PATH="$(brew --prefix gettext)/bin"
+    BREW_AUX_PATH="$COREUTIL_PATH:$CURL_PATH:$FINDUTILS_PATH:$CTAGS_PATH:$GETTEXT_PATH"
+    alias find=gfind
+  fi
+  export PATH=$BREW_AUX_PATH:$TOOL_PATH:$PATH
+else
+  export PATH=$TOOL_PATH:$PATH
+fi
+
+unset MANPATH
+export MANPATH=$HOME/tools/share/man:$(manpath)
+
+# User specific aliases and functions
+alias vi='vim'
+# export TERM='xterm-256color'
+if [ -f ~/.dircolors ]; then
+  eval $(dircolors ~/.dircolors)
+  zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+fi
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -52,7 +82,7 @@ POWERLINE_NO_BLANK_LINE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git git-flow git-extras cp colored-man common-aliases \
-         fastfile gem history-substring-search last-working-dir \
+         fastfile gem history-substring-search \
          sudo tmux vi-mode virtualenv wd z)
 
 source $ZSH/oh-my-zsh.sh
@@ -75,33 +105,3 @@ source $ZSH/oh-my-zsh.sh
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
-#export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dsun.awt.disablegrab=true' 
-TOOL_PATH=$HOME/tools/bin:$HOME/tools/sbin
-if [ "Darwin" = `uname -s` ]; then
-  # This is for HomeBrew on MacOS
-  if which brew &> /dev/null; then
-#    PHP_PATH="$(brew --prefix php54)/bin"
-    CURL_PATH="$(brew --prefix curl)/bin"
-    COREUTIL_PATH="$(brew --prefix coreutils)/libexec/gnubin"
-    FINDUTILS_PATH="$(brew --prefix findutils)/bin"
-    CTAGS_PATH="$(brew --prefix ctags)/bin"
-    GETTEXT_PATH="$(brew --prefix gettext)/bin"
-    BREW_AUX_PATH="$COREUTIL_PATH:$CURL_PATH:$PHP_PATH:$FINDUTILS_PATH:$CTAGS_PATH:$GETTEXT_PATH"
-    alias find=gfind
-  fi
-  #Note: on MacOS /etc/paths will make /usr/local/bin the last element in PATH, must explicitly append /usr/local/bin before PATH
-  export PATH=/usr/local/bin:$BREW_AUX_PATH:$TOOL_PATH:$PATH
-else
-  export PATH=$TOOL_PATH:$PATH
-fi
-
-unset MANPATH
-export MANPATH=$HOME/tools/share/man:$(manpath)
-
-# User specific aliases and functions
-alias vi='vim'
-# export TERM='xterm-256color'
-if [ -f ~/.dircolors ]; then
-  eval $(dircolors ~/.dircolors)
-  zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-fi
