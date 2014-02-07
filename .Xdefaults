@@ -1,34 +1,27 @@
-## urxvt config
+!urxvt config
 URxvt.termName: rxvt-unicode
 
-## borderless and no scrollbar
+!borderless and no scrollbar
 URxvt.scrollBar_right: true
 !URxvt.scrollBar: false
 !URxvt.borderLess: false
 
-## teh transparency stuff
+!teh transparency stuff
 URxvt.inheritPixmap: true
 URxvt.tintColor: white
 URxvt.shading: 40
 
 URxvt.scrollstyle: plain
-URxvt.font: xft:Monaco:pixelsize=12
-URxvt.boldfont: xft:Monaco:pixelsize=12
-!URxvt.font: xft:YaHei Consolas Hybrid:pixelsize=15:antialias=true
-!URxvt.boldfont:xft:YaHei Consolas Hybrid:pixelsize=15:antialias=true
-!URxvt.font: xft:WenQuanYi Bitmap Song:size=12:antialias=true
-!URxvt.boldFont: xft:WenQuanYi Bitmap Song:size=12:antialias=true
-!URxvt.font:xft:文泉驿等宽正黑:size=11:style=Regular:antialias=true
-
-!URxvt.boldfont:xft:文泉驿等宽正黑:size=11:style=Bold:antialias=true
+!URxvt.font: xft:Monaco for Powerline:size=9
+!URxvt.boldfont: xft:Monaco for Powerline:size=9
+URxvt.font:xft:Ubuntu Mono derivative Powerline:regular:size=11
+URxvt.boldfont:xft:Ubuntu Mono derivative Powerline:regular:size=11
 
 
 
 ! Xft Font Settings
 !URxvt.depth: 32
-Xft.dpi: 96
 !Xft.rgba: rgb
-Xft.hinting: true
 URxvt.saveLines: 50000
 
 ! Input Method
