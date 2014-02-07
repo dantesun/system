@@ -82,11 +82,13 @@ fi
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git git-flow git-extras cp colored-man common-aliases \
-         fastfile gem history-substring-search \
-         sudo tmux vi-mode virtualenv wd z)
+         fastfile gem sudo tmux vi-mode virtualenv wd z zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
+# Fix some keys I need in VI mode
+bindkey "^R" history-incremental-search-backward
+bindkey '\e.' insert-last-word
 # User configuration
 
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
