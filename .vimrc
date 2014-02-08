@@ -697,3 +697,6 @@ function EnhCommentifyCallback(ft)
 endfunction
 let g:EnhCommentifyCallbackExists = 'Yes'
 
+if executable("zsh")
+  set shell=zsh\ -l
+endif
