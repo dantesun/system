@@ -91,6 +91,9 @@ bindkey "^R" history-incremental-search-backward
 bindkey '\e.' insert-last-word
 # User configuration
 
+if [ -f $HOME/.zsh_local ]; then
+  source $HOME/.zsh_local
+fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
