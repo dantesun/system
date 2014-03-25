@@ -617,6 +617,13 @@ let g:ConqueTerm_TERM = 'xterm-color'
 let g:pymode_lint_ignore = "W0401,E501,E401"
 let g:pymode_breakpoint_bind = '<leader>B' " <leader>b is used by Ctrl+P
 let g:pymode_run_bind = '<leader>R' " <leader>r is used by Ctrl+P
+let g:pymode_rope = 0 "Disable rope in pymode, use YouCompleteMe with Jedi instead
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => YouCompleteMe
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <leader>jd :YcmCompleter GoTo<CR>
+let g:agprg="/home/dsun/tools/bin/ag"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  BufOnly
