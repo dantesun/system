@@ -115,8 +115,8 @@ colors solarized
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set backupdir=~/.vimruntime/backup
-set directory=~/.vimruntime/swap
+set backupdir=~/.vimruntime/backup//
+set directory=~/.vimruntime/swap//
 "Persistent undo
 "set undodir=~/.vimruntime/undo
 "set undofile
@@ -624,6 +624,8 @@ let g:pymode_rope = 0 "Disable rope in pymode, use YouCompleteMe with Jedi inste
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <leader>jd :YcmCompleter GoTo<CR>
 let g:agprg="/home/dsun/tools/bin/ag"
+let g:ycm_collect_identifiers_from_tags_files = 1
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  BufOnly
