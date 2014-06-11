@@ -20,3 +20,9 @@ for d in backup swap; do
     echo "$vimrun exists."
   fi
 done
+
+VUNDLE="$HOME/tools/vim-plugins/Vundle.vim"
+if ! [ -d $VUNDLE ]; then
+  mkdir -p $(dirname $VBUNDLE)
+  git clone https://github.com/gmarik/Vundle.vim $VUNDLE
+fi
