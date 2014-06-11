@@ -23,6 +23,5 @@ done
 
 VUNDLE="$HOME/tools/vim-plugins/Vundle.vim"
 if ! [ -d $VUNDLE ]; then
-  mkdir -p $(dirname $VBUNDLE)
   git clone https://github.com/gmarik/Vundle.vim $VUNDLE
 fi
