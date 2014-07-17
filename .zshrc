@@ -7,11 +7,11 @@ DISABLE_AUTO_UPDATE=true
 # time that oh-my-zsh is loaded.
 # ZSH_THEME="robbyrussell"
 # ZSH_THEME="agnoster"
-ZSH_THEME="powerline"
+# ZSH_THEME="powerline"
 # POWERLINE_RIGHT_B="date"
-POWERLINE_RIGHT_A="exit-status"
-POWERLINE_DETECT_SSH="true"
-POWERLINE_NO_BLANK_LINE="true"
+# POWERLINE_RIGHT_A="exit-status"
+# POWERLINE_DETECT_SSH="true"
+# POWERLINE_NO_BLANK_LINE="true"
 
 TOOL_PATH=$HOME/tools/bin:$HOME/tools/sbin
 if [ "Darwin" = `uname -s` ]; then
@@ -81,7 +81,9 @@ fi
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git git-flow git-extras cp colored-man common-aliases \
+# plugins=(git git-flow git-extras cp colored-man common-aliases \
+#          fastfile gem sudo tmux vi-mode virtualenv wd z zsh-syntax-highlighting)
+plugins=(cp colored-man common-aliases \
          fastfile gem sudo tmux vi-mode virtualenv wd z zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
