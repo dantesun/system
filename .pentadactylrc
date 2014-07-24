@@ -6,5 +6,6 @@ set guioptions=bCrsT
 
 autocmd LocationChange 10.153.1.31 :normal! <C-z>
 autocmd LocationChange mail.citrix.com :normal! <C-z>
+autocmd LocationChange wx.qq.com :normal! <C-z>
 autocmd LocationChange 'mail.citrix.com' :set  editor="gvim -f -c 'set ft=mail' +<line>"
 " vim: set ft=pentadactyl:
