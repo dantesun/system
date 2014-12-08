@@ -18,6 +18,10 @@ done
 if [ -e ".ssh/config" ]; then
   echo "SSH Config exists, skipping..."
 else
+  if ~[ -d ~/.ssh ]; then
+    echo "Creating ~/.ssh ..."
+    mkdir ~/.ssh
+  fi
   ln -sv system/ssh_config .ssh/config
 fi
 
