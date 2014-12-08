@@ -154,7 +154,7 @@ set guioptions-=l  "remove left-hand scroll bar
 set guioptions-=L  "remove left-hand scroll bar
 set guioptions-=b  "remove bottom scroll bar
 "set mouse=a " Enable mouse
-set guifont=Monaco\ 10
+set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
 
 
 " Window resizing mappings 

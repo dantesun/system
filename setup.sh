@@ -34,9 +34,15 @@ done
 TOOLS_BIN=$HOME/tools/bin
 [ -d  $TOOLS_BIN ] || mkdir -p $TOOLS_BIN
 [ -d  ~/tmp ] || mkdir -p ~/tmp
+echo "Using a custom ssh command. configuration files are combined by pattern config.*"
 [ -e $TOOLS_BIN/ssh ] || ln -sv $HOME/system/ssh $TOOLS_BIN/ssh
 
 VUNDLE="$HOME/tools/vim-plugins/Vundle.vim"
 if ! [ -d $VUNDLE ]; then
   git clone https://github.com/gmarik/Vundle.vim $VUNDLE
 fi
+
+[ -d ~/.config ] || mkdir ~/.config
+AWESOME_DIR="system/awesome"
+echo "Awesome Configuration"
+[ -L ~/.config/awesome ] || ln -sv ../$AWESOME_DIR ~/.config/

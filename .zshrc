@@ -6,6 +6,7 @@ DISABLE_AUTO_UPDATE=true
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 # ZSH_THEME="robbyrussell"
+ZSH_THEME="cloud"
 # ZSH_THEME="agnoster"
 # ZSH_THEME="powerline"
 # POWERLINE_RIGHT_B="date"
@@ -84,7 +85,8 @@ fi
 # plugins=(git git-flow git-extras cp colored-man common-aliases \
 #          fastfile gem sudo tmux vi-mode virtualenv wd z zsh-syntax-highlighting)
 plugins=(cp colored-man common-aliases \
-         fastfile gem sudo tmux vi-mode virtualenv wd z zsh-syntax-highlighting)
+         gem sudo tmux vi-mode virtualenv \
+         wd z zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
