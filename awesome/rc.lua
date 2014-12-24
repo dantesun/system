@@ -49,8 +49,8 @@ function run_once(cmd)
 end
 
 run_once("urxvtd")
-run_once("xcompmgr")
-run_once("cairo-dock -ca")
+--run_once("xcompmgr")
+--run_once("cairo-dock -ca")
 --run_once("unclutter")
 -- }}}
 
