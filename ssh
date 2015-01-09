@@ -3,7 +3,7 @@
 ssh() {
     TMPDIR=~/tmp
     case "$(uname -s)" in
-        Linux)
+        CYGWIN_NT* | Linux)
             tmp_fifo=$(mktemp -u --suffix=._ssh_fifo)
             ;;
         Darwin)
@@ -19,7 +19,7 @@ ssh() {
       echo "ssh is not found in PATH!"
       exit 1
     fi
-    if [ -x $SSHPASS ]; then
+    if [ -x $SSHPASS ] && [ -r ~/.ssh/ssh_pass ]; then
       HOST=$1
       PASSWORD=$(awk "/$HOST/ {print \$2}" ~/.ssh/ssh_pass)
       if ! [ -z $PASSWORD ]; then
