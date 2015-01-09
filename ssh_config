@@ -6,6 +6,5 @@ TCPKeepAlive yes
 ServerAliveInterval 15
 ServerAliveCountMax 6
 StrictHostKeyChecking no
-UserKnownHostsFile  /dev/null
-
+HashKnownHosts no
 
