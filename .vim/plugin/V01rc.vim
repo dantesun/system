@@ -105,6 +105,8 @@ set background=dark
 "colors molokai
 "colors peaksea
 "colors ir_black
+let g:solarized_termcolors=256
+let g:solarized_termtrans=1
 colors solarized
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo

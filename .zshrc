@@ -6,13 +6,13 @@ DISABLE_AUTO_UPDATE=true
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 # ZSH_THEME="robbyrussell"
-ZSH_THEME="cloud"
+# ZSH_THEME="cloud"
 # ZSH_THEME="agnoster"
-# ZSH_THEME="powerline"
-# POWERLINE_RIGHT_B="date"
-# POWERLINE_RIGHT_A="exit-status"
-# POWERLINE_DETECT_SSH="true"
-# POWERLINE_NO_BLANK_LINE="true"
+ZSH_THEME="powerline"
+POWERLINE_RIGHT_B=""
+POWERLINE_RIGHT_A="exit-status"
+POWERLINE_DETECT_SSH="true"
+POWERLINE_NO_BLANK_LINE="true"
 
 TOOL_PATH=$HOME/tools/bin:$HOME/tools/sbin
 if [ "Darwin" = `uname -s` ]; then
