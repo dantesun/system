@@ -10,15 +10,32 @@ ssh() {
             tmp_fifo=$(mktemp -u -t ._ssh_fifo)
             ;;
         *)
-            echo 'unsupported OS'
-            exit
+            tmp_fifo=
             ;;
     esac
+    SSH="/usr/bin/ssh"
+    SSHPASS=$(command -v sshpass || echo "")
+    if ! [ -x $SSH ]; then
+      echo "ssh is not found in PATH!"
+      exit 1
+    fi
+    if [ -x $SSHPASS ]; then
+      HOST=$1
+      PASSWORD=$(awk "/$HOST/ {print \$2}" ~/.ssh/ssh_pass)
+      if ! [ -z $PASSWORD ]; then
+        SSH="$SSHPASS -p $PASSWORD $SSH"
+      fi
+    fi
 
-    mkfifo "$tmp_fifo"
-    trap "rm -f $tmp_fifo" EXIT
-    cat ~/.ssh/config ~/.ssh/config.* >"$tmp_fifo" 2>/dev/null &
-    /usr/bin/ssh -F "$tmp_fifo" "$@"
+    if [ -z $tmp_fifo ]; then
+      $SSH -F "$tmp_fifo" "$@"
+    else
+      mkfifo "$tmp_fifo"
+      trap "rm -f $tmp_fifo" EXIT
+      cat ~/.ssh/config ~/.ssh/config.* >"$tmp_fifo" 2>/dev/null &
+      $SSH -F "$tmp_fifo" "$@"
+    fi
+
 }
 
 ssh $*

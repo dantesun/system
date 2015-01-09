@@ -114,3 +114,8 @@ fi
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
+
+[ -f ~/.ssh/config.host ] && : ${(A)ssh_config_hosts:=${${${${(@M)${(f)"$(<~/.ssh/config.host)"}:#Host *}#Host }:#*\**}:#*\?*}}
+[ -f ~/.ssh/known_hosts ] && : ${(A)ssh_known_hosts:=${${${(f)"$(<$HOME/.ssh/known_hosts)"}%%\ *}%%,*}}
+zstyle ':completion:*:hosts' hosts $ssh_config_hosts $ssh_known_hosts
+
