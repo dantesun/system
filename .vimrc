@@ -14,6 +14,8 @@ Plugin 'scrooloose/nerdtree'
 
 Plugin 'majutsushi/tagbar'
 
+Plugin 'tpope/vim-surround' "Surround plugin
+
 Plugin 'kien/ctrlp.vim'
 
 Plugin 'ervandew/supertab'
