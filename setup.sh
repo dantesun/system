@@ -37,6 +37,13 @@ else
   ln -sv system/ssh_config .ssh/config
 fi
 
+[ -x $HOME/tools/bin/fasd ] || {
+  echo "Installing fasd ..."
+  [ -d $HOME/tools/fasd ] || git clone https://github.com/clvv/fasd.git $HOME/tools/fasd
+  cd  $HOME/tools/fasd
+  make PREFIX=$HOME/tools install
+}
+
 for d in backup swap; do
   vimrun=".vimruntime/$d"
   if ! [ -d $vimrun ]; then
