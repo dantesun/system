@@ -1,5 +1,5 @@
 !urxvt config
-URxvt.termName: rxvt-unicode
+URxvt.termName: rxvt-unicode-256colors
 
 !borderless and no scrollbar
 URxvt.scrollBar_right: true
