@@ -16,7 +16,7 @@ for rcfile in "$HOME"/.zprezto/runcoms/!(README.md); do
   ln -sv $rcfile $dotfile
 done
 
-for file in vim bash_profile bashrc pentadactylrc dircolors gtkrc-2.0 gtkrc-solarized vimrc Xdefaults xpdfrc tmux.conf; do
+for file in vim bash_profile bashrc pentadactylrc gtkrc-2.0 gtkrc-solarized vimrc Xdefaults xpdfrc tmux.conf; do
   dotfile="$PWD/.$file"
   src="system/.$file"
   if [ -e "$dotfile" ]; then
@@ -26,6 +26,16 @@ for file in vim bash_profile bashrc pentadactylrc dircolors gtkrc-2.0 gtkrc-sola
     ln -s $src $dotfile
   fi
 done
+
+infocmp rxvt-unicode-256color 2>&1 > /dev/null || {
+  [ -d ~/.terminfo ] || mkdir ~/.terminfo
+  tic -o ~/.terminfo system/rxvt-unicode-256color.terminfo
+}
+[ -d ~/tools/dircolors-solarized ] || {
+  git clone https://github.com/dantesun/dircolors-solarized ~/tools/dircolors-solarized
+}
+rm -vf ~/.dircolors
+ln -sv ~/tools/dircolors-solarized/dircolors.256dark ~/.dircolors
 
 if [ -e ".ssh/config" ]; then
   echo "SSH Config exists, skipping..."
@@ -70,7 +80,3 @@ AWESOME_DIR="system/awesome"
 echo "Awesome Configuration"
 [ -L ~/.config/awesome ] || ln -sv ../$AWESOME_DIR ~/.config/
 
-infocmp rxvt-unicode-256colors 2>&1 > /dev/null || {
-  [ -d ~/.terminfo ] || mkdir ~/.terminfo
-  tic -o ~/.terminfo system/rxvt-unicode-256color.terminfo
-}

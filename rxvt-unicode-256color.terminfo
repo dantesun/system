@@ -1,5 +1,5 @@
 #	Reconstructed via infocmp from file: /lib/terminfo/r/rxvt-unicode
-rxvt-unicode-256colors|rxvt-unicode terminal (X Window System),
+rxvt-unicode-256color|rxvt-unicode terminal (X Window System),
 	auto_left_margin, auto_right_margin, back_color_erase,
 	can_change, eat_newline_glitch, erase_overstrike,
 	has_meta_key, has_status_line, move_insert_mode,

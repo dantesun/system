@@ -1,3 +1,3 @@
 cd $HOME/tools/bin
-curl http://betterthangrep.com/ack-standalone > ack
+curl http://beyondgrep.com/ack-2.14-single-file > ack
 chmod +x ack
