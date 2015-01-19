@@ -69,3 +69,8 @@ fi
 AWESOME_DIR="system/awesome"
 echo "Awesome Configuration"
 [ -L ~/.config/awesome ] || ln -sv ../$AWESOME_DIR ~/.config/
+
+infocmp rxvt-unicode-256colors 2>&1 > /dev/null || {
+  [ -d ~/.terminfo ] || mkdir ~/.terminfo
+  tic -o ~/.terminfo system/rxvt-unicode-256color.terminfo
+}
