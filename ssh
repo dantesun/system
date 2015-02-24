@@ -7,7 +7,7 @@ ssh() {
             tmp_fifo=$(mktemp -u --suffix=._ssh_fifo)
             ;;
         Darwin)
-            tmp_fifo=$(mktemp -u -t ._ssh_fifo)
+            tmp_fifo=$(/usr/bin/mktemp -u -t ._ssh_fifo)
             ;;
         *)
             tmp_fifo=
