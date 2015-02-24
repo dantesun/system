@@ -40,6 +40,8 @@ function! s:CloseIfOnlyNerdTreeLeft()
   endif
 endfunction
 
+" Always show status line. Fix the problem AirLine dispappears when NerdTree is toggle off
+set laststatus=2
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => tagbar
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
