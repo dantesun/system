@@ -4,8 +4,31 @@ cd $HOME
 #if ! [ -d .oh-my-zsh ]; then
 #  git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 #fi
+
+function git_clone()
+{
+  GITHUB_USER=${$1%/*}
+  GIT_REPO=${1#/*}
+  TARGET_DIR=$2
+  if [ -z $TARGET_DIR ]; then
+    $TARGET_DIR = $GIT_REPO
+  fi
+  if command -v git; then
+    git clone --recursive https://github.com/${GITHUB_USER}/${GIT_REPO}.git $TARGET_DIR
+  else
+    echo "Missing git, download master archive of $GIT_REPO"
+    if [ -d $TARGET_DIR ]; then
+      mkdir $TARGET_DIR
+    fi
+    DEST_FILE=$TARGET_DIR/$GIT_REPO.tar.gz
+    wget -O $DEST_FILE https://github.com/${GITHUB_USER}/${GIT_REPO}/archive/master.tar.gz
+    tar $DEST_FILE xf -C $TARGET_DIR/ --strip-components 1
+  fi
+}
+
+# ZSH Framework
 if ! [ -d .zprezto ]; then
-  git clone --recursive https://github.com/dantesun/prezto.git ".zprezto"
+  git_clone prezto .zprezto
 fi
 for rcfile in "$HOME"/.zprezto/runcoms/!(README.md); do
   dotfile="$HOME/.$(basename ${rcfile})"
@@ -32,7 +55,7 @@ infocmp rxvt-unicode-256color 2>&1 > /dev/null || {
   tic -o ~/.terminfo system/rxvt-unicode-256color.terminfo
 }
 [ -d ~/tools/dircolors-solarized ] || {
-  git clone https://github.com/dantesun/dircolors-solarized ~/tools/dircolors-solarized
+  git_clone dircolors-solarized ~/tools/dircolors-solarized
 }
 rm -vf ~/.dircolors
 ln -sv ~/tools/dircolors-solarized/dircolors.256dark ~/.dircolors
@@ -49,7 +72,7 @@ fi
 
 [ -x $HOME/tools/bin/fasd ] || {
   echo "Installing fasd ..."
-  [ -d $HOME/tools/fasd ] || git clone https://github.com/clvv/fasd.git $HOME/tools/fasd
+  [ -d $HOME/tools/fasd ] || git_clone clvv/fasd $HOME/tools/fasd
   cd  $HOME/tools/fasd
   make PREFIX=$HOME/tools install
 }
@@ -72,7 +95,7 @@ echo "Using a custom ssh command. configuration files are combined by pattern co
 
 VUNDLE="$HOME/tools/vim-plugins/Vundle.vim"
 if ! [ -d $VUNDLE ]; then
-  git clone https://github.com/gmarik/Vundle.vim $VUNDLE
+  git_clone gmarik/Vundle $VUNDLE
 fi
 
 [ -d ~/.config ] || mkdir ~/.config
