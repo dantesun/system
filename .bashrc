@@ -1,6 +1,11 @@
 #!/bin/bash
 # .bashrc
 
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+  . /etc/bashrc
+fi
+
 # Make Bash append rather than overwrite the history on disk
 shopt -s histappend
 export CDPATH=".:..:../..:~:~/fusion.tsoft/fusion/components/services"

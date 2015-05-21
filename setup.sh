@@ -7,22 +7,25 @@ cd $HOME
 
 function git_clone()
 {
-  GITHUB_USER=${$1%/*}
-  GIT_REPO=${1#/*}
+  GITHUB_USER=${1%/*}
+  GIT_REPO=${1#*/}
   TARGET_DIR=$2
   if [ -z $TARGET_DIR ]; then
     $TARGET_DIR = $GIT_REPO
   fi
+  echo "GitHub User ${GITHUB_USER} , REPO ${GIT_REPO}, TARGET_DIR: ${TARGET_DIR}"
   if command -v git; then
     git clone --recursive https://github.com/${GITHUB_USER}/${GIT_REPO}.git $TARGET_DIR
   else
     echo "Missing git, download master archive of $GIT_REPO"
-    if [ -d $TARGET_DIR ]; then
-      mkdir $TARGET_DIR
+    if ! [ -d $TARGET_DIR ]; then
+      mkdir -p $TARGET_DIR                                                                                                                                                                                                                                                      
     fi
     DEST_FILE=$TARGET_DIR/$GIT_REPO.tar.gz
+    echo wget -O $DEST_FILE https://github.com/${GITHUB_USER}/${GIT_REPO}/archive/master.tar.gz
     wget -O $DEST_FILE https://github.com/${GITHUB_USER}/${GIT_REPO}/archive/master.tar.gz
-    tar $DEST_FILE xf -C $TARGET_DIR/ --strip-components 1
+    echo tar $DEST_FILE xf -C $TARGET_DIR --strip-components 1
+    tar xf $DEST_FILE -C $TARGET_DIR --strip-components 1
   fi
 }
 
